@@ -1,4 +1,4 @@
-import LoginForm from "@/src/components/modals/LoginForm";
+import LoginForm from "@/src/components/authForm/LoginForm";
 import React from "react";
 
 import {

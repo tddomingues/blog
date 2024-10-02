@@ -9,7 +9,7 @@ import {
 } from "@/src/components/ui/card";
 
 import Link from "next/link";
-import RegisterForm from "@/src/components/modals/RegisterForm";
+import RegisterForm from "@/src/components/authForm/RegisterForm";
 
 const Register = () => {
   return (

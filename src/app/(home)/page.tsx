@@ -7,6 +7,8 @@ import { Button } from "@/src/components/ui/button";
 import { Badge } from "@/src/components/ui/badge";
 import Link from "next/link";
 import { Calendar, UserRound } from "lucide-react";
+import { useState } from "react";
+import CreatePost from "@/src/components/CreatePost";
 
 const Page = async () => {
   const user = await currentUser();
@@ -20,7 +22,7 @@ const Page = async () => {
       </nav>
       <div className="flex flex-col gap-4">
         <div className="flex justify-end pt-4 container">
-          <Button>Crie uma postagem</Button>
+          <CreatePost />
         </div>
         <section className="container">
           <Card className="flex flex-col gap-4 relative">
