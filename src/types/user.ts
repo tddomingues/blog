@@ -4,7 +4,7 @@ export default interface UserProps {
   email: string;
   password: string;
   confirmPassword?: string;
-  role?: "admin" | "user";
+  role?: string;
   active?: boolean;
   create_at?: Date;
 }

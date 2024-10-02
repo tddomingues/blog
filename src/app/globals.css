@@ -73,3 +73,9 @@
     @apply bg-background text-primary;
   }
 }
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-10;
+  }
+}

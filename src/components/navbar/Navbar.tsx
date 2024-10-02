@@ -6,16 +6,20 @@ import AuthBtns from "./AuthBtns";
 import UserMenu from "./UserMenu";
 import UserProps from "@/src/types/user";
 
-const Header = async ({ user }: { user: UserProps }) => {
+interface NavbarProps {
+  user?: UserProps | null;
+}
+
+const Navbar = async ({ user }: NavbarProps) => {
   return (
-    <nav className="flex items-center relative gap-8">
+    <div className="flex items-center relative gap-8">
       <Logo />
       <div className="flex items-center justify-end gap-8 absolute right-0 h-full">
         <SearchPosts />
         {user ? <UserMenu user={user} /> : <AuthBtns />}
       </div>
-    </nav>
+    </div>
   );
 };
 
-export default Header;
+export default Navbar;
