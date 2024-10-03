@@ -2,7 +2,7 @@ export default interface PostProps {
   id?: string;
   title: string;
   description: string;
-  favorite: number;
+  like: number;
   image: string;
   reading_time: number;
   category: string;

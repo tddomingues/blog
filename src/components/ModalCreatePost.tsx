@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Error } from "./Error";
 import axios from "axios";
 import UserProps from "../types/user";
+import { useToast } from "../hooks/use-toast";
 
 const schema = z.object({
   title: z.string().min(5),
@@ -33,7 +34,11 @@ interface CreatePostProps {
   user: UserProps | null;
 }
 
-const CreatePost = ({ user }: CreatePostProps) => {
+const ModalCreatePost = ({ user }: CreatePostProps) => {
+  const [open, setOpen] = useState(false);
+
+  const { toast } = useToast();
+
   const {
     handleSubmit,
     register,
@@ -50,7 +55,7 @@ const CreatePost = ({ user }: CreatePostProps) => {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     const newData = {
       ...data,
-      favorite: 0,
+      like: 0,
       reading_time: 62,
       category: "Tecnologia",
       fk_user_id: user?.id,
@@ -59,7 +64,11 @@ const CreatePost = ({ user }: CreatePostProps) => {
     axios
       .post("http://localhost:3000/api/post/create", newData)
       .then((res) => {
-        console.log(res);
+        toast({
+          variant: "default",
+          description: res.data.message,
+        });
+        setOpen(false);
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +76,7 @@ const CreatePost = ({ user }: CreatePostProps) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Crie uma postagem</Button>
       </DialogTrigger>
@@ -94,8 +103,7 @@ const CreatePost = ({ user }: CreatePostProps) => {
             <div className="grid grid-cols-4 items-center">
               <Label className="text-right mr-4">Conteúdo</Label>
               <Textarea
-                placeholder="Escreva seu contéudo."
-                className="col-span-3"
+                className="col-span-3 max-h-[200px]"
                 {...register("description")}
               />
               {errors.description && (
@@ -125,4 +133,4 @@ const CreatePost = ({ user }: CreatePostProps) => {
   );
 };
 
-export default CreatePost;
+export default ModalCreatePost;

@@ -1,4 +1,4 @@
-import { currentUser } from "@/src/lib/auth";
+import { currentUser } from "@/src/actions/getCurrentUser";
 import db from "@/src/lib/db";
 import { NextResponse } from "next/server";
 
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { title, description, favorite, image, reading_time, category } = body;
+  const { title, description, like, image, reading_time, category } = body;
 
   Object.keys(body).forEach((value: any) => {
     if (!body[value]) {
@@ -31,18 +31,17 @@ export async function POST(request: Request) {
     }
   });
 
-  // const createPost = await db.post.create({
-  //   data: {
-  //     title,
-  //     description,
-  //     favorite,
-  //     image,
-  //     reading_time,
-  //     category,
-  //     fk_user_id: user.id,
-  //   },
-  // });
+  const createPost = await db.post.create({
+    data: {
+      title,
+      description,
+      like,
+      image,
+      reading_time,
+      category,
+      fk_user_id: user.id,
+    },
+  });
 
-  // return NextResponse.json(createPost);
   return NextResponse.json({ message: "Postagem criada com sucesso" });
 }

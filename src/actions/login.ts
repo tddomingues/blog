@@ -1,5 +1,3 @@
-"use server";
-
 import bcrypt from "bcryptjs";
 
 import { signIn } from "@/auth";

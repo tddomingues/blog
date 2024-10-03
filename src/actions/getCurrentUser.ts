@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import db from "./db";
+import db from "../lib/db";
 
 export const getSession = async () => {
   const session = await auth();

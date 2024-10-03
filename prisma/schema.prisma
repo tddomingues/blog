@@ -22,7 +22,7 @@ model Post {
   id           String @id @default(uuid())
   title        String
   description  String
-  favorite     Int
+  like     Int
   image        String
   reading_time Float
   category     String
