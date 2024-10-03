@@ -22,7 +22,7 @@ const Page = async () => {
       </nav>
       <div className="flex flex-col gap-4">
         <div className="flex justify-end pt-4 container">
-          <CreatePost />
+          {user?.role === "admin" && <CreatePost user={user} />}
         </div>
         <section className="container">
           <Card className="flex flex-col gap-4 relative">

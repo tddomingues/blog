@@ -13,6 +13,13 @@ export async function POST(request: Request) {
     );
   }
 
+  if (user.role !== "admin") {
+    return NextResponse.json(
+      { error: "Você não tem permissão para criar um post" },
+      { status: 403 }
+    );
+  }
+
   const { title, description, favorite, image, reading_time, category } = body;
 
   Object.keys(body).forEach((value: any) => {
@@ -24,17 +31,18 @@ export async function POST(request: Request) {
     }
   });
 
-  const createPost = await db.post.create({
-    data: {
-      title,
-      description,
-      favorite,
-      image,
-      reading_time,
-      category,
-      fk_user_id: user.id,
-    },
-  });
+  // const createPost = await db.post.create({
+  //   data: {
+  //     title,
+  //     description,
+  //     favorite,
+  //     image,
+  //     reading_time,
+  //     category,
+  //     fk_user_id: user.id,
+  //   },
+  // });
 
-  return NextResponse.json(createPost);
+  // return NextResponse.json(createPost);
+  return NextResponse.json({ message: "Postagem criada com sucesso" });
 }

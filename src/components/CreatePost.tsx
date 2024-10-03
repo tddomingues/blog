@@ -17,8 +17,9 @@ import { Textarea } from "./ui/textarea";
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Error from "./Error";
+import { Error } from "./Error";
 import axios from "axios";
+import UserProps from "../types/user";
 
 const schema = z.object({
   title: z.string().min(5),
@@ -28,7 +29,11 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>;
 
-const CreatePost = () => {
+interface CreatePostProps {
+  user: UserProps | null;
+}
+
+const CreatePost = ({ user }: CreatePostProps) => {
   const {
     handleSubmit,
     register,
@@ -48,7 +53,7 @@ const CreatePost = () => {
       favorite: 0,
       reading_time: 62,
       category: "Tecnologia",
-      fk_user_id: "38ed7303-1ac7-4c51-9ab9-5ac15b852b6c",
+      fk_user_id: user?.id,
     };
 
     axios
@@ -76,22 +81,39 @@ const CreatePost = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right">Título</Label>
+            <div className="grid grid-cols-4 items-center">
+              <Label className="text-right mr-4">Título</Label>
               <Input className="col-span-3" {...register("title")} />
-              {errors.title && <Error message="Título obrigatório" />}
+              {errors.title && (
+                <Error
+                  message="Título obrigatório"
+                  className="col-start-2 col-span-3"
+                />
+              )}
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right">Conteúdo</Label>
+            <div className="grid grid-cols-4 items-center">
+              <Label className="text-right mr-4">Conteúdo</Label>
               <Textarea
                 placeholder="Escreva seu contéudo."
                 className="col-span-3"
                 {...register("description")}
               />
+              {errors.description && (
+                <Error
+                  message="Conteúdo obrigatório"
+                  className="col-start-2 col-span-3"
+                />
+              )}
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right">Link da imagem</Label>
+            <div className="grid grid-cols-4 items-center">
+              <Label className="text-right mr-4">Link da imagem</Label>
               <Input className="col-span-3" {...register("image")} />
+              {errors.image && (
+                <Error
+                  message="Link da imagem obrigatório"
+                  className="col-start-2 col-span-3"
+                />
+              )}
             </div>
           </div>
           <DialogFooter>
