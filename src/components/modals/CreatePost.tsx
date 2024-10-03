@@ -1,6 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -10,22 +20,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Error } from "./Error";
+import { Error } from "../Error";
 import axios from "axios";
-import UserProps from "../types/user";
-import { useToast } from "../hooks/use-toast";
+import UserProps from "../../types/user";
+import { useToast } from "../../hooks/use-toast";
 
 const schema = z.object({
   title: z.string().min(5),
   description: z.string().min(10),
   image: z.string().url(),
+  category: z.string().nonempty(),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -42,12 +53,14 @@ const ModalCreatePost = ({ user }: CreatePostProps) => {
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       title: "",
       description: "",
       image: "",
+      category: "",
     },
     resolver: zodResolver(schema),
   });
@@ -56,8 +69,7 @@ const ModalCreatePost = ({ user }: CreatePostProps) => {
     const newData = {
       ...data,
       like: 0,
-      reading_time: 62,
-      category: "Tecnologia",
+      reading_time: 0,
       fk_user_id: user?.id,
     };
 
@@ -119,6 +131,33 @@ const ModalCreatePost = ({ user }: CreatePostProps) => {
               {errors.image && (
                 <Error
                   message="Link da imagem obrigatório"
+                  className="col-start-2 col-span-3"
+                />
+              )}
+            </div>
+            <div className="grid grid-cols-4 items-center">
+              <Label className="text-right mr-4">Categorias</Label>
+              <Select onValueChange={(value) => setValue("category", value)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Selecione um categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Tecnologia</SelectLabel>
+                    <SelectItem value="desenvolvimento">
+                      Desenvolvimento
+                    </SelectItem>
+                    <SelectItem value="jogos">Jogos</SelectItem>
+                    <SelectItem value="design">Design</SelectItem>
+                    <SelectItem value="cibersegurança">
+                      Cibersegurança{" "}
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {errors.category && (
+                <Error
+                  message="Insira uma categoria"
                   className="col-start-2 col-span-3"
                 />
               )}

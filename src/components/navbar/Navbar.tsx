@@ -1,22 +1,29 @@
-import Logo from "./Logo";
-
 import SearchPosts from "./SearchPosts";
 import AuthBtns from "./AuthBtns";
 
 import UserMenu from "./UserMenu";
 import UserProps from "@/src/types/user";
+import { currentUser } from "@/src/actions/getCurrentUser";
 
 interface NavbarProps {
   user?: UserProps | null;
 }
 
-const Navbar = async ({ user }: NavbarProps) => {
+const Navbar = async () => {
+  const user = await currentUser();
   return (
-    <div className="flex items-center relative gap-8">
-      <Logo />
-      <div className="flex items-center justify-end gap-8 absolute right-0 h-full">
-        <SearchPosts />
-        {user ? <UserMenu user={user} /> : <AuthBtns />}
+    <div className="border-b">
+      <div className="container flex items-center justify-between py-4">
+        <div>
+          <h1 className="flex flex-col items-center">
+            <span className="text-lg font-semibold">TGDOMINGUES</span>
+            <span className="text-xl font-semibold">BLOG</span>
+          </h1>
+        </div>
+        <div className="flex items-center justify-end gap-8 relative right-0 h-full">
+          <SearchPosts />
+          {user ? <UserMenu user={user} /> : <AuthBtns />}
+        </div>
       </div>
     </div>
   );

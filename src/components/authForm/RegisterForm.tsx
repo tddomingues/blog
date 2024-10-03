@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import Error from "../Error";
+import { Error } from "../Error";
 import { useToast } from "@/src/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -46,7 +46,7 @@ const RegisterForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
     axios
       .post("/api/auth/register", data)
       .then(() => {

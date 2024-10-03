@@ -6,7 +6,7 @@ import {
 } from "@/src/components/ui/avatar";
 import { Badge } from "@/src/components/ui/badge";
 import { Button } from "@/src/components/ui/button";
-import posts from "@/src/constants/posts";
+
 import { currentUser } from "@/src/actions/getCurrentUser";
 import calculateReadingTime from "@/src/lib/calculateReadingTime";
 import { ThumbsUp } from "lucide-react";
@@ -14,12 +14,14 @@ import Image from "next/image";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { getPosts } from "@/src/actions/getPosts";
 
 const Post = async (props: any) => {
   const { params } = props;
   const user = await currentUser();
+  const posts = await getPosts();
 
-  const post = posts.find((post) => post.id === params.id);
+  const post = posts && posts.find((post) => post.id === params.id);
 
   if (!post) return <div>Post não encontrado</div>;
 
@@ -32,9 +34,14 @@ const Post = async (props: any) => {
       </nav>
       <div className=" container flex gap-4 flex-col mt-4">
         <div className="w-full h-[300px] relative">
-          <Image alt="" src={post?.image} fill />
+          <Image
+            alt=""
+            src={post?.image}
+            fill
+            className="object-cover object-center "
+          />
           <div className="absolute bottom-4 left-4 ">
-            <Badge variant="outline" className="font-normal text-base">
+            <Badge variant="default" className="font-normal text-base">
               Tecnologia
             </Badge>
           </div>
@@ -58,21 +65,9 @@ const Post = async (props: any) => {
           </div>
         </div>
         <div>
-          <h2 className="text-5xl font-medium mt-4 ">
-            {post?.title}NextAuth Credentials — easy signup & login with email &
-            password (Next.js 14 App router and Zod resolver)
-          </h2>
+          <h2 className="text-5xl font-medium mt-4 ">{post?.title}</h2>
 
-          <p className="mt-4">
-            NextAuth.js is a robust, open-source authentication solution
-            tailor-made for Next.js applications, seamlessly blending with
-            Next.js and Serverless environments. It accommodates many popular
-            sign-in options, including email and passwordless sign-ins, making
-            it a versatile choice for developers. Although it demands a bit more
-            effort to configure compared to solutions like Clerk, it rewards
-            users with unmatched control over data management and unparalleled
-            flexibility in customization without incurring extra costs.
-          </p>
+          <p className="mt-4">{post.description}</p>
         </div>
 
         <span className="flex items-center">

@@ -8,3 +8,12 @@ export const getPosts = async () => {
     return null;
   }
 };
+
+export const getFirstPost = async () => {
+  try {
+    const posts = await db.post.findMany({});
+    return posts[0];
+  } catch (error) {
+    return null;
+  }
+};

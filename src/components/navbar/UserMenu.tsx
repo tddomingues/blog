@@ -24,7 +24,7 @@ const UserMenu = ({ user }: { user: UserProps }) => {
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer">
             <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>Foto</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
@@ -32,14 +32,7 @@ const UserMenu = ({ user }: { user: UserProps }) => {
             Meu Perfil
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer">
-              <span>Meus Favoritos</span>
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem className="cursor-pointer" asChild>
             <span onClick={() => signOut()}>Sair</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -7,12 +7,13 @@ interface MessageProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Error = React.forwardRef<HTMLDivElement, MessageProps>(
-  ({ className, message, ...props }) => (
+  ({ className, message, ...props }, ref) => (
     <span
       className={cn(
         "mt-1 text-xs font-medium text-destructive flex items-center gap-1",
         className
       )}
+      ref={ref}
       {...props}
     >
       <CircleAlert size={12} />

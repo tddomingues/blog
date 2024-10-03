@@ -9,11 +9,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm, SubmitHandler } from "react-hook-form";
-
-import Error from "../Error";
+import { signIn, useSession } from "next-auth/react";
+import { Error } from "../Error";
 import { useToast } from "@/src/hooks/use-toast";
 
 import { login } from "@/src/actions/login";
+import axios from "axios";
 
 const schema = z.object({
   email: z.string().email(),
@@ -37,22 +38,23 @@ const LoginForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      const res = await login(data);
-
-      if (res?.error) {
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
+    signIn("credentials", {
+      ...data,
+      redirectTo: "/",
+    }).then((callback) => {
+      if (callback?.error) {
         toast({
           variant: "destructive",
           title: "Ocorreu um erro",
-          description: res.error,
+          description: "Erro de credenciais",
         });
-      } else {
+      }
+
+      if (callback?.ok) {
         router.push("/");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

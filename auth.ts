@@ -1,5 +1,7 @@
+import axios from "axios";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import db from "./src/lib/db";
 
 export const {
   signIn,
@@ -16,15 +18,23 @@ export const {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials: any) {
-        if (!credentials.email) {
+        if (!credentials.email || !credentials.password) {
           return null;
         }
 
-        console.log(credentials.email);
+        const user = await db.user.findFirst({
+          where: {
+            email: credentials.email,
+          },
+        });
 
-        return {
-          email: credentials.email,
-        };
+        if (user) {
+          return {
+            email: credentials.email,
+          };
+        }
+
+        return null;
       },
     }),
   ],
