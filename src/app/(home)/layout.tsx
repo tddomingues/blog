@@ -7,9 +7,9 @@ interface PageProps {
 
 const Layout = ({ children }: PageProps) => {
   return (
-    <div>
+    <div className="flex flex-col h-svh">
       <Navbar />
-      <div>{children}</div>
+      <div className="flex-1">{children}</div>
       <Footer />
     </div>
   );

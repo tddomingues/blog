@@ -27,6 +27,7 @@ model Post {
   reading_time Float
   category     String
   create_at DateTime @default(now())
+  id_user_like String[] @default([])
   fk_user_id   String
   user         User   @relation(fields: [fk_user_id], references: [id])
 }

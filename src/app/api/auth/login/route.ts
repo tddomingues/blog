@@ -11,8 +11,6 @@ export async function POST(request: Request) {
 
   const { email, password } = body;
 
-  console.log(email, password);
-
   const user = await db.user.findFirst({
     where: {
       email,
