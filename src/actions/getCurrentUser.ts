@@ -16,8 +16,6 @@ export const currentUser = async () => {
     return null;
   }
 
-  console.log("session", session);
-
   const user = await db.user.findFirst({
     where: {
       email: session?.user?.email as string,

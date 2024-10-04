@@ -1,9 +1,14 @@
 "use client";
 
-import { likePost } from "@/src/actions/getPosts";
 import { Button } from "@/src/components/ui/button";
+import useLikePost from "@/src/hooks/useLikePost";
+import { cn } from "@/src/lib/utils";
 import axios from "axios";
+
 import { ThumbsUp } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import Loading from "./loading";
 
 interface HandleLikeProps {
   id_user: string;
@@ -11,12 +16,18 @@ interface HandleLikeProps {
 }
 
 const PostClient = ({ id_post, id_user }: HandleLikeProps) => {
+  const [dynamicLike, setDynamicLike] = useState<boolean>(false);
+
+  const { hasLiked, loading } = useLikePost(id_user, id_post, dynamicLike);
+
+  const router = useRouter();
+
   const handleLike = async () => {
-    console.log(id_post);
     axios
       .put(`/api/post/update/${id_post}`, {})
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        router.refresh();
+        setDynamicLike(!dynamicLike);
       })
       .catch((err) => {
         console.log(err);
@@ -28,7 +39,13 @@ const PostClient = ({ id_post, id_user }: HandleLikeProps) => {
       variant={"link"}
       onClick={() => handleLike()}
     >
-      <ThumbsUp className="hover:text-blue-500" />
+      <ThumbsUp
+        className={cn(
+          hasLiked
+            ? "fill-blue-400 text-blue-400"
+            : "fill-primary-foreground text-primary"
+        )}
+      />
     </Button>
   );
 };
