@@ -1,14 +1,51 @@
 import { currentUser } from "@/src/actions/getCurrentUser";
 import db from "@/src/lib/db";
-import { NextResponse } from "next/server";
-
+import { revalidatePath } from "next/cache";
+import { NextResponse, NextRequest } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 interface IParams {
   id?: string;
 }
 
-export async function PUT(request: Request, { params }: { params: IParams }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: IParams }
+) {
   const user = await currentUser();
-  const body = await request.json();
+  const postId = params.id;
+
+  if (!user) {
+    return NextResponse.json(
+      { error: "Usuário não encontrado" },
+      { status: 404 }
+    );
+  }
+
+  if (user.role === "user") {
+    return NextResponse.json(
+      { error: "Usuário não autorizado" },
+      { status: 401 }
+    );
+  }
+
+  await db.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+
+  return NextResponse.json({ message: "Post deletado com sucesso!" });
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: IParams }
+) {
+  const user = await currentUser();
+  const body = await request.body;
+  const path = request.nextUrl.searchParams.get("path") || "/post";
+
+  console.log(path);
 
   if (!user) {
     return NextResponse.json(
@@ -43,6 +80,7 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
         },
       },
     });
+    // revalidatePath(`/post/[id]`);
     return NextResponse.json({ message: "Você descurtiu!" });
   }
 
@@ -59,6 +97,8 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
       },
     },
   });
+
+  // revalidatePath(`/post/[id]`);
 
   return NextResponse.json({ message: "Você curtiu!" });
 }

@@ -1,5 +1,6 @@
 import { currentUser } from "@/src/actions/getCurrentUser";
 import db from "@/src/lib/db";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     }
   });
 
-  const createPost = await db.post.create({
+  await db.post.create({
     data: {
       title,
       description,
@@ -42,6 +43,8 @@ export async function POST(request: Request) {
       fk_user_id: user.id,
     },
   });
+
+  revalidatePath("/");
 
   return NextResponse.json({ message: "Postagem criada com sucesso" });
 }

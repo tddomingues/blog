@@ -13,8 +13,9 @@ import Image from "next/image";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { getPosts, likePost } from "@/src/actions/getPosts";
-import PostClient from "./PostClient";
+import { getPosts } from "@/src/actions/getAllPosts";
+import PostClient from "./BtnLikeClient";
+import BtnDelete from "./BtnDeleteClient";
 
 const Post = async (props: any) => {
   const { params } = props;
@@ -27,6 +28,9 @@ const Post = async (props: any) => {
 
   return (
     <div className=" container flex gap-4 flex-col mt-4">
+      <div className="self-end">
+        <BtnDelete id_post={params.id} />
+      </div>
       <div className="w-full h-[300px] relative">
         <Image
           alt=""

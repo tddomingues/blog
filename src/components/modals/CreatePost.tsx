@@ -31,6 +31,7 @@ import { Error } from "../Error";
 import axios from "axios";
 import UserProps from "../../types/user";
 import { useToast } from "../../hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   title: z.string().min(5),
@@ -47,6 +48,8 @@ interface CreatePostProps {
 
 const ModalCreatePost = ({ user }: CreatePostProps) => {
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   const { toast } = useToast();
 
@@ -74,13 +77,14 @@ const ModalCreatePost = ({ user }: CreatePostProps) => {
     };
 
     axios
-      .post("http://localhost:3000/api/post/create", newData)
+      .post("http://localhost:3000/api/post", newData)
       .then((res) => {
         toast({
           variant: "default",
           description: res.data.message,
         });
         setOpen(false);
+        router.replace("/");
       })
       .catch((err) => {
         console.log(err);
