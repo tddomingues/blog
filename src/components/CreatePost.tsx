@@ -20,17 +20,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
+import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Error } from "../Error";
+import { Error } from "./Error";
 import axios from "axios";
-import UserProps from "../../types/user";
-import { useToast } from "../../hooks/use-toast";
+import UserProps from "../types/user";
+import { useToast } from "../hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 const schema = z.object({
@@ -84,7 +84,7 @@ const ModalCreatePost = ({ user }: CreatePostProps) => {
           description: res.data.message,
         });
         setOpen(false);
-        router.replace("/");
+        router.refresh();
       })
       .catch((err) => {
         console.log(err);

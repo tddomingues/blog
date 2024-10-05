@@ -14,8 +14,8 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { getPosts } from "@/src/actions/getAllPosts";
-import PostClient from "./BtnLikeClient";
-import BtnDelete from "./BtnDeleteClient";
+import PostClient from "../../../../components/BtnLike";
+import BtnDelete from "../../../../components/BtnDelete";
 
 const Post = async (props: any) => {
   const { params } = props;
