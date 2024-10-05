@@ -1,15 +1,8 @@
 import { currentUser } from "@/src/actions/getCurrentUser";
 import _posts from "@/src/constants/posts";
-import Image from "next/image";
-import { Card } from "@/src/components/ui/card";
-import { Badge } from "@/src/components/ui/badge";
+
 import Link from "next/link";
-import { Calendar, UserRound } from "lucide-react";
-import ModalCreatePost from "@/src/components/CreatePost";
-import { getPosts } from "@/src/actions/getAllPosts";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import useGetPosts from "@/src/hooks/useGetPosts";
+
 import ListPost from "@/src/components/ListPosts";
 
 export const NoPost = () => {
@@ -26,7 +19,21 @@ export const Page = async () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-end mt-4 container">
-        {user?.role === "admin" && <ModalCreatePost user={user} />}
+        {user?.role === "admin" && (
+          <Link
+            href={"/post/create"}
+            className="
+            h-9 px-4 py-2 
+            rounded-md 
+            text-sm font-medium transition-colors 
+            focus-visible:outline-none 
+            focus-visible:ring-1 focus-visible:ring-ring 
+            disabled:pointer-events-none disabled:opacity-50 
+            bg-primary text-primary-foreground shadow hover:bg-primary/90"
+          >
+            Criar postagem
+          </Link>
+        )}
       </div>
       <div className="container">
         <ListPost />
