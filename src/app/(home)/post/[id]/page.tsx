@@ -4,18 +4,18 @@ import {
   AvatarImage,
 } from "@/src/components/ui/avatar";
 import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
 
 import { currentUser } from "@/src/actions/getCurrentUser";
 import calculateReadingTime from "@/src/lib/calculateReadingTime";
-import { ThumbsUp } from "lucide-react";
+
 import Image from "next/image";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { getPosts } from "@/src/actions/getAllPosts";
-import PostClient from "../../../../components/BtnLike";
-import BtnDelete from "../../../../components/BtnDelete";
+import PostClient from "../../../../components/Like";
+import BtnDelete from "../../../../components/DeletePost";
+import Like from "../../../../components/Like";
 
 const Post = async (props: any) => {
   const { params } = props;
@@ -69,8 +69,8 @@ const Post = async (props: any) => {
       </div>
 
       <span className="flex items-center">
-        {user && <PostClient id_user={user.id} id_post={post.id} />}
-        {post.like} curtidas
+        {user && <Like id_post={post.id} id_user={user?.id || ""} />}
+        {post.likes.length} curtidas
       </span>
     </div>
   );

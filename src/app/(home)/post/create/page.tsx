@@ -80,7 +80,7 @@ const CreatePost = ({ user }: CreatePostProps) => {
     };
 
     axios
-      .post("http://localhost:3000/api/post", newData)
+      .post("http://localhost:3000/api/post/create-post", newData)
       .then((res) => {
         toast({
           variant: "default",

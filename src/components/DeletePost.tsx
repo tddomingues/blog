@@ -7,7 +7,7 @@ import { useRouter, redirect } from "next/navigation";
 const BtnDelete = ({ id_post }: { id_post: string }) => {
   const router = useRouter();
   const handleDelete = async (id_post: string) => {
-    await axios.delete(`/api/post/${id_post}`).then(() => {
+    await axios.delete(`/api/post/delete-post/${id_post}`).then(() => {
       router.replace("/");
     });
   };

@@ -7,7 +7,11 @@ interface ActionPostProps {
 
 export const getPosts = async () => {
   try {
-    const posts = await db.post.findMany({});
+    const posts = await db.post.findMany({
+      include: {
+        likes: true,
+      },
+    });
     return posts;
   } catch (error) {
     return null;

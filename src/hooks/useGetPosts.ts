@@ -6,7 +6,7 @@ export default function useGetPosts() {
   const [posts, setPosts] = useState<PostProps[]>([]);
 
   async function getPosts() {
-    const response = await axios.get("/api/post");
+    const response = await axios.get("/api/post/get-all-posts");
     const posts = response.data;
     return posts ?? [];
   }

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { title, description, like, image, reading_time, category } = body;
+  const { title, description, image, reading_time, category } = body;
 
   Object.keys(body).forEach((value: any) => {
     if (!body[value]) {
@@ -36,7 +36,6 @@ export async function POST(request: Request) {
     data: {
       title,
       description,
-      like,
       image,
       reading_time,
       category,
@@ -47,10 +46,4 @@ export async function POST(request: Request) {
   revalidatePath("/");
 
   return NextResponse.json({ message: "Postagem criada com sucesso" });
-}
-
-export async function GET(request: Request) {
-  const posts = await db.post.findMany({});
-
-  return NextResponse.json(posts);
 }

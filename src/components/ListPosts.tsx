@@ -14,6 +14,8 @@ import { NoPost } from "../app/(home)/page";
 const ListPost = () => {
   const { posts } = useGetPosts();
 
+  console.log(posts);
+
   const mostLikedPosts =
     posts && posts.sort((a, b) => b.like - a.like).slice(0, 5);
 

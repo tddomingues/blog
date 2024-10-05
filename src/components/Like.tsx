@@ -8,29 +8,35 @@ import { ThumbsUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useOptimistic } from "react";
+
+import PostProps from "../types/post";
+import likePost from "../actions/likePost";
+
 interface HandleLikeProps {
   id_user: string;
   id_post: string;
 }
 
-const PostClient = ({ id_post, id_user }: HandleLikeProps) => {
+const Like = ({ id_post, id_user }: HandleLikeProps) => {
   const [dynamicLike, setDynamicLike] = useState<boolean>(false);
 
   const router = useRouter();
 
+  // const [optimistic, setOptimistic] = useOptimistic(
+  //   post.id_user_like,
+  //   (state, newLike) => state.some(predicate) ? state.filter(like => like.)
+
+  // );
+
   const handleLike = async () => {
-    axios
-      .put(`/api/post/${id_post}`, {
-        next: {
-          tags: ["put-post"],
-        },
-      })
-      .then(() => {
-        setDynamicLike(!dynamicLike);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const data = {
+      id_post,
+      id_user,
+    };
+    console.log(data);
+
+    await likePost(data);
   };
   return (
     <Button
@@ -50,4 +56,4 @@ const PostClient = ({ id_post, id_user }: HandleLikeProps) => {
   );
 };
 
-export default PostClient;
+export default Like;
