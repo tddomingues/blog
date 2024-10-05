@@ -11,11 +11,11 @@ export async function GET(
 ) {
   const postId = params.id;
 
-  const posts = await db.post.findFirst({
+  const post = await db.post.findFirst({
     where: {
       id: postId,
     },
   });
 
-  return NextResponse.json(posts);
+  return NextResponse.json(post);
 }

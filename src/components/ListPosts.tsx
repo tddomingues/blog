@@ -9,15 +9,14 @@ import { Calendar, UserRound } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import useGetPosts from "../hooks/useGetPosts";
-import { NoPost } from "../app/(home)/page";
-
+import { NoPost } from "./NoPost";
 const ListPost = () => {
   const { posts } = useGetPosts();
 
   console.log(posts);
 
   const mostLikedPosts =
-    posts && posts.sort((a, b) => b.like - a.like).slice(0, 5);
+    posts && posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 5);
 
   const firstPost = posts && posts[0];
 

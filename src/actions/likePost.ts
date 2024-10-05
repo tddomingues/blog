@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import db from "../lib/db";
 
 interface LikePostProps {
@@ -32,6 +33,8 @@ export default async function likePost(data: LikePostProps) {
   console.log("likePost", likePost);
 
   if (!likePost) {
+    revalidatePath(`/post/${data.id_post}`);
+
     return await db.post.update({
       where: {
         id: data.id_post,
@@ -45,6 +48,8 @@ export default async function likePost(data: LikePostProps) {
       },
     });
   }
+
+  revalidatePath(`/post/${data.id_post}`);
 
   return await db.like.deleteMany({
     where: {

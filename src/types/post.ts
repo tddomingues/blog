@@ -1,9 +1,11 @@
+import LikeProps from "./like";
+
 export default interface PostProps {
-  id?: string;
+  id: string;
   title: string;
   description: string;
-  like: number;
   image: string;
+  likes: LikeProps[];
   reading_time: number;
   id_user_like: string[];
   category: string;

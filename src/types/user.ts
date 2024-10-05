@@ -1,10 +1,10 @@
 export default interface UserProps {
-  id?: string;
+  id: string;
   name: string;
   email: string;
   password: string;
   confirmPassword?: string;
-  role?: string;
-  active?: boolean;
-  create_at?: Date;
+  role: string;
+  active: boolean;
+  create_at: Date;
 }

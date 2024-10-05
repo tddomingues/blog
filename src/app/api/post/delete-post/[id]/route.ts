@@ -12,6 +12,7 @@ export async function DELETE(
 ) {
   const user = await currentUser();
   const postId = params.id;
+  console.log(postId);
 
   if (!user) {
     return NextResponse.json(

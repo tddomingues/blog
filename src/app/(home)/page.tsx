@@ -5,14 +5,6 @@ import Link from "next/link";
 
 import ListPost from "@/src/components/ListPosts";
 
-export const NoPost = () => {
-  return (
-    <div className="container">
-      <h2 className="text-5xl font-medium text-center">SEM CONTEÚDO</h2>
-    </div>
-  );
-};
-
 export const Page = async () => {
   const user = await currentUser();
 

@@ -26,5 +26,10 @@ export const currentUser = async () => {
     return null;
   }
 
-  return user;
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
 };
