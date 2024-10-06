@@ -3,17 +3,10 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
+
 import { signOut } from "next-auth/react";
 import UserProps from "@/src/types/user";
 
@@ -22,16 +15,13 @@ const UserMenu = ({ user }: { user: UserProps }) => {
     <div className="flex items-center gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="cursor-pointer">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>Foto</AvatarFallback>
-          </Avatar>
+          <div className="bg-chart-2 grid place-items-center rounded-full h-9 w-9 cursor-pointer">
+            <span className="font-medium text-primary-foreground text-lg">
+              {user.name![0]}
+            </span>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel className="cursor-pointer">
-            Meu Perfil
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" asChild>
             <span onClick={() => signOut()}>Sair</span>
           </DropdownMenuItem>

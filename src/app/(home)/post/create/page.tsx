@@ -4,7 +4,7 @@ import React from "react";
 
 const CreatePost = async () => {
   const user = await currentUser();
-  // console.log(user);
+
   return (
     <div className="container">
       {user?.role === "admin" ? (

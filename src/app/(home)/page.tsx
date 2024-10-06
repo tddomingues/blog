@@ -8,6 +8,7 @@ import { getPosts } from "@/src/actions/getAllPosts";
 import NewestPost from "@/src/components/NewestPost";
 import { NoPost } from "@/src/components/NoPost";
 import ListMostLikedPosts from "@/src/components/ListMostLikedPosts";
+import { SquarePen } from "lucide-react";
 
 export const Page = async () => {
   const user = await currentUser();
@@ -20,24 +21,15 @@ export const Page = async () => {
         <div className="flex flex-col gap-4">
           <div className="flex justify-end mt-4 container">
             {user?.role === "admin" && (
-              <Link
-                href={"/post/create"}
-                className="
-            h-9 px-4 py-2 
-            rounded-md 
-            text-sm font-medium transition-colors 
-            focus-visible:outline-none 
-            focus-visible:ring-1 focus-visible:ring-ring 
-            disabled:pointer-events-none disabled:opacity-50 
-            bg-primary text-primary-foreground shadow hover:bg-primary/90"
-              >
-                Criar postagem
+              <Link href={"/post/create"} className="flex items-center gap-2">
+                <SquarePen />
+                <span>Escrever</span>
               </Link>
             )}
           </div>
           <div className="container">
             <NewestPost posts={posts} />
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-8">
               <ListAllPosts posts={posts.slice(1)} />
               <ListMostLikedPosts posts={posts} />
             </div>

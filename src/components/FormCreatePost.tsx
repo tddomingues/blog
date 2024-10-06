@@ -48,7 +48,6 @@ interface CreatePostProps {
 }
 
 const FormCreatePost = ({ user }: CreatePostProps) => {
-  const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const { toast } = useToast();
@@ -56,6 +55,8 @@ const FormCreatePost = ({ user }: CreatePostProps) => {
     handleSubmit,
     register,
     setValue,
+    reset,
+    resetField,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -75,19 +76,23 @@ const FormCreatePost = ({ user }: CreatePostProps) => {
       fk_user_id: user!.id,
     };
 
-    await axios
-      .post("http://localhost:3000/api/post/create-post", newData)
-      .then((res) => {
-        toast({
-          variant: "default",
-          description: res.data.message,
-        });
-        setOpen(false);
-        router.replace("/");
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/post/create-post",
+        newData
+      );
+
+      toast({
+        variant: "default",
+        description: res.data.message,
       });
+
+      if (res.status === 200) {
+        router.replace("/");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -120,7 +125,6 @@ const FormCreatePost = ({ user }: CreatePostProps) => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Tecnologia</SelectLabel>
                 <SelectItem value="desenvolvimento">Desenvolvimento</SelectItem>
                 <SelectItem value="jogos">Jogos</SelectItem>
                 <SelectItem value="design">Design</SelectItem>

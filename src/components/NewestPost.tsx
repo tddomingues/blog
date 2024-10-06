@@ -2,19 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "./ui/card";
 import { Badge } from "@/src/components/ui/badge";
-import { Calendar, UserRound } from "lucide-react";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import {
-  useGetAllPosts,
-  useGetFirstPost,
-  useGetMostLikedPosts,
-} from "../hooks/useGetPosts";
-import { NoPost } from "./NoPost";
-import { useEffect, useState } from "react";
-import Loading from "../app/(home)/loading";
-import { getPosts } from "../actions/getAllPosts";
+
 import PostProps from "../types/post";
 
 interface NewestPostProps {
@@ -25,7 +16,7 @@ const NewestPost = async ({ posts }: NewestPostProps) => {
   const firstPost = posts[0];
 
   return (
-    <div className="mb-4">
+    <div className="mb-9">
       <Card className="flex flex-col gap-4 relative">
         <div className="p-4">
           <h1 className="text-5xl font-medium">{firstPost?.title}</h1>
@@ -33,7 +24,7 @@ const NewestPost = async ({ posts }: NewestPostProps) => {
         </div>
 
         <Link href={`/post/${firstPost?.id}`}>
-          <div className="relative  w-full h-[400px] ">
+          <div className="relative w-full h-[400px] ">
             <Image
               alt="imagem da postagem"
               src={firstPost?.image!}

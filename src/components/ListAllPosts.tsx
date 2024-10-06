@@ -15,10 +15,10 @@ interface ListAllPostsProps {
 
 const ListAllPosts = async ({ posts }: ListAllPostsProps) => {
   return (
-    <div className="grid grid-cols-3 gap-4 h-full">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 h-full w-full">
       {posts.map((post, index) => (
         <Card key={index} className="flex flex-col gap-4">
-          <div className="relative h-[200px] w-full">
+          <div className="relative h-[200px] w-full ">
             <Image
               alt="imagem da postagem"
               src={post.image}
@@ -32,7 +32,7 @@ const ListAllPosts = async ({ posts }: ListAllPostsProps) => {
               <span className="mr-2">
                 <UserRound size={18} />
               </span>
-              Admin
+              {post.user.name}
             </Badge>
             <Badge variant="outline" className="font-normal text-base">
               <span className="mr-2">
@@ -44,7 +44,7 @@ const ListAllPosts = async ({ posts }: ListAllPostsProps) => {
             </Badge>
           </div>
           <div className="flex flex-col gap-2 px-4 mb-4">
-            <h1 className="font-medium text-xl">{post.title}</h1>
+            <h1 className="font-medium text-xl line-clamp-2">{post.title}</h1>
             <p className="line-clamp-2">{post.description}</p>
             <Link href={`/post/${post.id}`} className="font-medium underline ">
               Ler mais
