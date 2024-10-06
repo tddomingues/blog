@@ -12,6 +12,9 @@ export const getPosts = async () => {
         likes: true,
         user: true,
       },
+      orderBy: {
+        create_at: "desc",
+      },
     });
     return posts;
   } catch (error) {

@@ -63,10 +63,10 @@ const PostById = ({ posts, user, post_id }: PostByIdProps) => {
           </span>
         </div>
       </div>
-      <div>
+      <div className="w-full">
         <h2 className="text-5xl font-medium mt-4 ">{post!.title}</h2>
 
-        <p className="mt-4">{post!.description}</p>
+        <p className="mt-4 ">{post!.description}</p>
       </div>
       <span className="flex items-center">
         {user && (

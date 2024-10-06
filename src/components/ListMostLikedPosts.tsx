@@ -2,19 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "./ui/card";
 import { Badge } from "@/src/components/ui/badge";
-import { Calendar, UserRound } from "lucide-react";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import {
-  useGetAllPosts,
-  useGetFirstPost,
-  useGetMostLikedPosts,
-} from "../hooks/useGetPosts";
-import { NoPost } from "./NoPost";
-import { useEffect, useState } from "react";
-import Loading from "../app/(home)/loading";
-import { getPosts } from "../actions/getAllPosts";
+
 import PostProps from "../types/post";
 
 interface NewestPostProps {
@@ -22,12 +13,6 @@ interface NewestPostProps {
 }
 
 const ListMostLikedPosts = async ({ posts }: NewestPostProps) => {
-  // const { posts } = useGetAllPosts();
-
-  // const { mostLikedPosts } = useGetMostLikedPosts();
-
-  // const { firstPost } = useGetFirstPost();
-
   const mostLikedPosts =
     posts && posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 5);
 
@@ -54,7 +39,11 @@ const ListMostLikedPosts = async ({ posts }: NewestPostProps) => {
               >
                 {post.category}
               </Badge>
-              <span className="text-xs">21 de Marco de 2012</span>
+              <span className="text-xs">
+                {format(post.create_at, "dd MMMM yyyy", {
+                  locale: ptBR,
+                })}
+              </span>
               <h3 className="font-medium line-clamp-2">{post.title}</h3>
             </div>
           </Card>
