@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // if (pathname.includes("/app") && !token) {
+  // if (pathname.includes("/post/create") && !token) {
   //   return NextResponse.redirect(new URL(getUrl("/auth")));
   // }
 }
