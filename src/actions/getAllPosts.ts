@@ -10,6 +10,7 @@ export const getPosts = async () => {
     const posts = await db.post.findMany({
       include: {
         likes: true,
+        user: true,
       },
     });
     return posts;

@@ -7,8 +7,7 @@ export default interface PostProps {
   image: string;
   likes: LikeProps[];
   reading_time: number;
-  id_user_like: string[];
   category: string;
-  create_at: string;
+  create_at: Date;
   fk_user_id: string;
 }
