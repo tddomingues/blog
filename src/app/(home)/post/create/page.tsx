@@ -79,7 +79,7 @@ const CreatePost = ({ user }: CreatePostProps) => {
       fk_user_id: user?.id,
     };
 
-    axios
+    await axios
       .post("http://localhost:3000/api/post/create-post", newData)
       .then((res) => {
         toast({
