@@ -16,7 +16,7 @@ const CreatePost = async () => {
     <div className="container">
       {user?.role === "admin" ? (
         <>
-          <h2 className="my-8 text-5xl font-medium">Cria uma postagem</h2>
+          <h2 className="my-8 text-5xl font-medium">Criar Postagem</h2>
           <FormPost
             user={user}
             defaultValuesForm={defaultValuesForm}

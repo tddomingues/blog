@@ -26,6 +26,7 @@ const EditPost = async ({ params }: EditPostProps) => {
 
   return (
     <div className="container">
+      <h2 className="my-8 text-5xl font-medium">Editar Postagem</h2>
       <FormPost
         defaultValuesForm={defaultValuesForm}
         user={user}
