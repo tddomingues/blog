@@ -14,12 +14,15 @@ import {
 import axios from "axios";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import action from "../actions/actions";
 
 const BtnDelete = ({ id_post }: { id_post: string }) => {
   const router = useRouter();
 
   const handleDelete = async (id_post: string) => {
     await axios.delete(`/api/post/delete-post/${id_post}`);
+
+    await action({ typePost: "create/delete" });
 
     router.replace("/");
   };

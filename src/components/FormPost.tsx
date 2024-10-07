@@ -9,15 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/src/components/ui/dialog";
+import { DialogFooter } from "@/src/components/ui/dialog";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -34,6 +26,8 @@ import UserProps from "../types/user";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../hooks/use-toast";
+import { revalidatePath } from "next/cache";
+import action from "../actions/actions";
 const schema = z.object({
   title: z.string().min(5),
   description: z.string().min(10),
@@ -87,15 +81,13 @@ const FormPost = ({
           "http://localhost:3000/api/post/create-post",
           newData
         );
-
         toast({
           variant: "default",
           description: res.data.message,
         });
 
-        if (res.status === 200) {
-          router.replace("/");
-        }
+        await action({ typePost: "create/delete" });
+        router.replace("/");
       }
 
       if (typePost === "edit") {
@@ -109,9 +101,9 @@ const FormPost = ({
           description: res.data.message,
         });
 
-        if (res.status === 200) {
-          router.replace("/");
-        }
+        await action({ typePost: "edit", id_post });
+
+        router.replace(`/post/${id_post}`);
       }
     } catch (err) {
       console.error(err);
@@ -142,7 +134,10 @@ const FormPost = ({
         </div>
         <div className="">
           <Label className="text-right mr-4">Categorias</Label>
-          <Select onValueChange={(value) => setValue("category", value)}>
+          <Select
+            onValueChange={(value) => setValue("category", value)}
+            defaultValue={defaultValuesForm.category || ""}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Selecione um categoria" />
             </SelectTrigger>
@@ -160,16 +155,25 @@ const FormPost = ({
           )}
         </div>
       </div>
-      <DialogFooter>
+
+      <div className="flex justify-between w-full mt-8">
         <Button
           type="button"
           variant="outline"
-          onClick={() => router.replace(`/post/${id_post}`)}
+          onClick={() => {
+            if (typePost === "create") {
+              router.replace("/");
+            }
+
+            if (typePost === "edit") {
+              router.replace(`/post/${id_post}`);
+            }
+          }}
         >
           Voltar
         </Button>
         <Button type="submit">Salvar</Button>
-      </DialogFooter>
+      </div>
     </form>
   );
 };

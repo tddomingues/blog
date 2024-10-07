@@ -1,6 +1,6 @@
 import { currentUser } from "@/src/actions/getCurrentUser";
 import db from "@/src/lib/db";
-import { revalidatePath } from "next/cache";
+
 import { NextResponse } from "next/server";
 
 interface ParamsProps {
@@ -66,8 +66,6 @@ export async function PUT(
     },
     data,
   });
-
-  revalidatePath(`/`);
 
   return NextResponse.json({ message: "Postagem atualizada com sucesso" });
 }
