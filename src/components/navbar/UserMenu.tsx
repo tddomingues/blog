@@ -15,7 +15,7 @@ const UserMenu = ({ user }: { user: UserProps }) => {
     <div className="flex items-center gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="bg-chart-2 grid place-items-center rounded-full h-9 w-9 cursor-pointer">
+          <div className="bg-chart-2 grid place-items-center rounded-full h-10 w-10 cursor-pointer">
             <span className="font-medium text-primary-foreground text-lg">
               {user.name![0]}
             </span>

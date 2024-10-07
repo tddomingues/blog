@@ -1,5 +1,6 @@
 import { currentUser } from "@/src/actions/getCurrentUser";
 import db from "@/src/lib/db";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 interface ParamsProps {
@@ -33,6 +34,8 @@ export async function DELETE(
       id: postId,
     },
   });
+
+  revalidatePath(`/`);
 
   return NextResponse.json({ message: "Post deletado com sucesso!" });
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card } from "./ui/card";
 import { Badge } from "@/src/components/ui/badge";
-import { Calendar, UserRound } from "lucide-react";
+import { Calendar, Edit2, UserRound } from "lucide-react";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -16,6 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import calculateReadingTime from "../lib/calculateReadingTime";
 import Like from "./Like";
 import { NoPost } from "./NoPost";
+import EditPost from "../app/(home)/post/edit/[id]/page";
 
 interface PostByIdProps {
   posts: PostProps[];
@@ -31,8 +32,15 @@ const PostById = ({ posts, user, post_id }: PostByIdProps) => {
       {post ? (
         <div className=" container flex gap-4 flex-col mt-4">
           {user?.role === "admin" && (
-            <div className="self-end">
+            <div className="self-end flex gap-4">
               <DeletePost id_post={post!.id} />
+              <Link
+                href={`edit/${post.id}`}
+                className="flex items-center gap-1 cursor-pointer transition-colors duration-200 hover:text-sky-400"
+              >
+                <Edit2 />
+                Editar
+              </Link>
             </div>
           )}
           <div className="w-full h-[400px] relative">
@@ -52,10 +60,11 @@ const PostById = ({ posts, user, post_id }: PostByIdProps) => {
             </div>
           </div>
           <div className="flex gap-2 mt-4">
-            <Avatar className="cursor-pointer">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <div className="bg-chart-2 grid place-items-center rounded-full h-10 w-10 cursor-pointer">
+              <span className="font-medium text-primary-foreground text-lg">
+                {post.user.name![0].toUpperCase()}
+              </span>
+            </div>
 
             <div className="flex flex-col">
               <span>{post!.user.name}</span>

@@ -33,7 +33,7 @@ const Like = ({ id_post, id_user, post }: HandleLikeProps) => {
         <ThumbsUp
           className={cn(
             post.likes.some((like) => like.fk_user_id === id_user)
-              ? "fill-blue-400 text-blue-400"
+              ? "fill-sky-400 text-sky-400"
               : "fill-primary-foreground text-primary"
           )}
         />

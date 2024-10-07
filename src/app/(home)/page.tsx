@@ -21,9 +21,12 @@ export const Page = async () => {
         <div className="flex flex-col gap-4">
           <div className="flex justify-end mt-4 container">
             {user?.role === "admin" && (
-              <Link href={"/post/create"} className="flex items-center gap-2">
+              <Link
+                href={"/post/create"}
+                className="flex items-center gap-2 transition-colors duration-200 hover:text-sky-400"
+              >
                 <SquarePen />
-                <span>Escrever</span>
+                Escrever
               </Link>
             )}
           </div>

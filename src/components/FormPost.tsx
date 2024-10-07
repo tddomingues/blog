@@ -43,11 +43,24 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>;
 
-interface CreatePostProps {
+interface FormPostProps {
   user: UserProps | null;
+  defaultValuesForm: {
+    title: string;
+    description: string;
+    image: string;
+    category: string;
+  };
+  typePost: "create" | "edit";
+  id_post?: string;
 }
 
-const FormCreatePost = ({ user }: CreatePostProps) => {
+const FormPost = ({
+  user,
+  defaultValuesForm,
+  typePost,
+  id_post,
+}: FormPostProps) => {
   const router = useRouter();
 
   const { toast } = useToast();
@@ -55,40 +68,50 @@ const FormCreatePost = ({ user }: CreatePostProps) => {
     handleSubmit,
     register,
     setValue,
-    reset,
-    resetField,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      image: "",
-      category: "",
-    },
+    defaultValues: defaultValuesForm,
     resolver: zodResolver(schema),
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     const newData = {
       ...data,
-      like: 0,
       reading_time: 0,
       fk_user_id: user!.id,
     };
 
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/post/create-post",
-        newData
-      );
+      if (typePost === "create") {
+        const res = await axios.post(
+          "http://localhost:3000/api/post/create-post",
+          newData
+        );
 
-      toast({
-        variant: "default",
-        description: res.data.message,
-      });
+        toast({
+          variant: "default",
+          description: res.data.message,
+        });
 
-      if (res.status === 200) {
-        router.replace("/");
+        if (res.status === 200) {
+          router.replace("/");
+        }
+      }
+
+      if (typePost === "edit") {
+        const res = await axios.put(
+          `http://localhost:3000/api/post/edit-post/${id_post}`,
+          newData
+        );
+
+        toast({
+          variant: "default",
+          description: res.data.message,
+        });
+
+        if (res.status === 200) {
+          router.replace("/");
+        }
       }
     } catch (err) {
       console.error(err);
@@ -138,10 +161,17 @@ const FormCreatePost = ({ user }: CreatePostProps) => {
         </div>
       </div>
       <DialogFooter>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => router.replace(`/post/${id_post}`)}
+        >
+          Voltar
+        </Button>
         <Button type="submit">Salvar</Button>
       </DialogFooter>
     </form>
   );
 };
 
-export default FormCreatePost;
+export default FormPost;

@@ -26,7 +26,7 @@ const BtnDelete = ({ id_post }: { id_post: string }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <div className="flex items-center gap-1 cursor-pointer hover:text-destructive">
+        <div className="flex items-center gap-1 cursor-pointer transition-colors duration-200 hover:text-destructive">
           <Trash2 />
           Excluir
         </div>
