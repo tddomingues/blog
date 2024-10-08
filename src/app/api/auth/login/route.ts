@@ -33,5 +33,9 @@ export async function POST(request: Request) {
     );
   }
 
+  const response = NextResponse.next();
+
+  response.cookies.set("authjs.user", JSON.stringify(user));
+
   return NextResponse.json(user, { status: 201 });
 }

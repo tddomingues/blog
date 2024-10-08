@@ -17,25 +17,23 @@ export const Page = async () => {
 
   return (
     <>
-      {posts ? (
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-end mt-4 container">
-            {user?.role === "admin" && (
-              <Link
-                href={"/post/create"}
-                className="flex items-center gap-2 transition-colors duration-200 hover:text-sky-400"
-              >
-                <SquarePen />
-                Escrever
-              </Link>
-            )}
-          </div>
-          <div className="container">
-            <NewestPost posts={posts} />
-            <div className="flex justify-between gap-8">
-              <ListAllPosts posts={posts.slice(1)} />
-              <ListMostLikedPosts posts={posts} />
-            </div>
+      <div className="flex justify-end my-4">
+        {user?.role === "admin" && (
+          <Link
+            href={"/post/create"}
+            className="flex items-center gap-2 transition-colors duration-200 text-primary/80 hover:text-sky-500"
+          >
+            <SquarePen size={18} />
+            <span className="text-sm">Escrever</span>
+          </Link>
+        )}
+      </div>
+      {posts?.length > 0 ? (
+        <div className="flex flex-col gap-6">
+          <NewestPost post={posts[0]} />
+          <div className="flex flex-col gap-6 lg:flex-row-reverse lg:justify-between">
+            <ListMostLikedPosts posts={posts} />
+            <ListAllPosts posts={posts.slice(1)} />
           </div>
         </div>
       ) : (

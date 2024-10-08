@@ -9,7 +9,7 @@ const Layout = ({ children }: PageProps) => {
   return (
     <div className="flex flex-col h-svh">
       <Navbar />
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 px-2 lg:container">{children}</div>
       <Footer />
     </div>
   );

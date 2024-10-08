@@ -36,14 +36,14 @@ const PostById = ({ posts, user, post_id }: PostByIdProps) => {
               <DeletePost id_post={post!.id} />
               <Link
                 href={`edit/${post.id}`}
-                className="flex items-center gap-1 cursor-pointer transition-colors duration-200 hover:text-sky-400"
+                className="flex items-center gap-1 cursor-pointer transition-colors duration-200 text-primary/80 hover:text-sky-400"
               >
-                <Edit2 />
-                Editar
+                <Edit2 size={16} />
+                <span className="text-sm">Editar</span>
               </Link>
             </div>
           )}
-          <div className="w-full h-[400px] relative">
+          <div className="w-full h-[300px] relative">
             <Image
               alt=""
               src={post!.image}
@@ -51,16 +51,13 @@ const PostById = ({ posts, user, post_id }: PostByIdProps) => {
               className="object-cover object-center"
             />
             <div className="absolute bottom-4 left-4 ">
-              <Badge
-                variant="default"
-                className="font-normal text-base capitalize"
-              >
+              <Badge variant="default" className="text-sm capitalize">
                 {post?.category}
               </Badge>
             </div>
           </div>
-          <div className="flex gap-2 mt-4">
-            <div className="bg-chart-2 grid place-items-center rounded-full h-10 w-10 cursor-pointer">
+          <div className="flex items-center gap-2 mt-4">
+            <div className="bg-chart-2 grid place-items-center rounded-full h-8 w-8 cursor-pointer">
               <span className="font-medium text-primary-foreground text-lg">
                 {post.user.name![0].toUpperCase()}
               </span>
@@ -68,20 +65,20 @@ const PostById = ({ posts, user, post_id }: PostByIdProps) => {
 
             <div className="flex flex-col">
               <span>{post!.user.name}</span>
-              <span className="text-sm">
+              <span className="text-sm text-primary/80">
                 {calculateReadingTime(post!.description)}s de leitura
               </span>
             </div>
-            <div>
-              <span className="text-sm">
+            <div className="self-end mb-[-1px]">
+              <span className="text-sm text-primary/80">
                 {format(post!.create_at, "d MMM, yyyy", { locale: ptBR })}
               </span>
             </div>
           </div>
           <div className="w-full">
-            <h2 className="text-5xl font-medium mt-4 ">{post!.title}</h2>
+            <h2 className="text-3xl font-extrabold mt-4 ">{post!.title}</h2>
 
-            <p className="mt-4 ">{post!.description}</p>
+            <p className="mt-2 text-primary/80">{post!.description}</p>
           </div>
           <span className="flex items-center">
             {user && (

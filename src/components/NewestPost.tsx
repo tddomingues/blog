@@ -9,43 +9,41 @@ import { ptBR } from "date-fns/locale";
 import PostProps from "../types/post";
 
 interface NewestPostProps {
-  posts: PostProps[];
+  post: PostProps;
 }
 
-const NewestPost = async ({ posts }: NewestPostProps) => {
-  const firstPost = posts[0];
-
+const NewestPost = async ({ post }: NewestPostProps) => {
   return (
-    <div className="mb-9">
-      <Card className="flex flex-col gap-4 relative">
-        <div className="p-4">
-          <h1 className="text-5xl font-medium">{firstPost?.title}</h1>
-          <p className="text-2xl mt-2 line-clamp-2">{firstPost?.description}</p>
-        </div>
+    <Card className="flex flex-col gap-2 relative">
+      <div className="p-3">
+        <h1 className="text-3xl font-extrabold">{post.title}</h1>
+        <p className="text-base line-clamp-2 text-primary/80">
+          {post.description}
+        </p>
+      </div>
 
-        <Link href={`/post/${firstPost?.id}`}>
-          <div className="relative w-full h-[400px] ">
-            <Image
-              alt="imagem da postagem"
-              src={firstPost?.image!}
-              fill
-              className="object-cover object-center rounded-b-xl"
-            />
-          </div>
-        </Link>
-
-        <div className="absolute bottom-4 left-4">
-          <Badge variant="default" className="font-normal text-base mr-2">
-            {format(firstPost?.create_at!, "d MMM, yyyy", {
-              locale: ptBR,
-            })}
-          </Badge>
-          <Badge variant="default" className="font-normal text-base capitalize">
-            {firstPost?.category}
-          </Badge>
+      <Link href={`/post/${post.id}`}>
+        <div className="relative w-full h-[300px] ">
+          <Image
+            alt={post.title}
+            src={post.image}
+            fill
+            className="object-cover rounded-b-xl"
+          />
         </div>
-      </Card>
-    </div>
+      </Link>
+
+      <div className="absolute bottom-3 left-3">
+        <Badge variant="default" className="text-sm capitalize mr-2">
+          {format(post.create_at, "d MMM, yyyy", {
+            locale: ptBR,
+          })}
+        </Badge>
+        <Badge variant="default" className="text-sm capitalize">
+          {post.category}
+        </Badge>
+      </div>
+    </Card>
   );
 };
 

@@ -13,19 +13,25 @@ interface NavbarProps {
 const Navbar = async () => {
   const user = await currentUser();
   return (
-    <div className="border-b">
-      <div className="container flex items-center justify-between py-4">
-        <Link href={"/"}>
-          <h1 className="flex flex-col items-center">
-            <span className="text-lg font-semibold">TGDOMINGUES</span>
-            <span className="text-xl font-semibold">BLOG</span>
-          </h1>
-        </Link>
-        <div className="flex items-center justify-end gap-8 relative right-0 h-full">
-          <SearchPosts />
-          {user ? <UserMenu user={user} /> : <AuthBtns />}
+    <div>
+      <div className="border-b py-2 px-4">
+        <div className="container flex items-center justify-between">
+          <Link href={"/"}>
+            <h1 className="flex flex-col items-center">
+              <span className="text-base font-extrabold lg:text-lg">
+                TGDOMINGUES
+              </span>
+              <span className="text-lg font-extrabold lg:text-xl">BLOG</span>
+            </h1>
+          </Link>
+          <div className="flex items-center flex-col justify-end gap-8 relative right-0 h-full">
+            {user ? <UserMenu user={user} /> : <AuthBtns />}
+          </div>
         </div>
       </div>
+      {/* <div className="mt-4 px-2 lg:container lg:w-[60%]">
+        <SearchPosts />
+      </div> */}
     </div>
   );
 };

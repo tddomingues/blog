@@ -13,10 +13,10 @@ const CreatePost = async () => {
   };
 
   return (
-    <div className="container">
+    <div className="lg:container">
       {user?.role === "admin" ? (
         <>
-          <h2 className="my-8 text-5xl font-medium">Criar Postagem</h2>
+          <h2 className="mt-8 mb-4 text-3xl font-extrabold">Criar Postagem</h2>
           <FormPost
             user={user}
             defaultValuesForm={defaultValuesForm}
@@ -25,7 +25,7 @@ const CreatePost = async () => {
         </>
       ) : (
         <h2 className="text-5xl font-medium text-center mt-4">
-          Não existe usuário
+          Sem autorização
         </h2>
       )}
     </div>

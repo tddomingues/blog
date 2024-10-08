@@ -33,12 +33,14 @@ const Like = ({ id_post, id_user, post }: HandleLikeProps) => {
         <ThumbsUp
           className={cn(
             post.likes.some((like) => like.fk_user_id === id_user)
-              ? "fill-sky-400 text-sky-400"
-              : "fill-primary-foreground text-primary"
+              ? "fill-sky-500 text-sky-500"
+              : "fill-primary-foreground text-primary/80"
           )}
         />
       </Button>
-      <span>{post.likes.length} curtida(s)</span>
+      <span className="text-sm text-primary/80">
+        {post.likes.length} curtida(s)
+      </span>
     </>
   );
 };

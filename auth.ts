@@ -26,12 +26,15 @@ export const {
           where: {
             email: credentials.email,
           },
+          select: {
+            name: true,
+            email: true,
+            role: true,
+          },
         });
 
         if (user) {
-          return {
-            email: credentials.email,
-          };
+          return user;
         }
 
         return null;
@@ -39,20 +42,22 @@ export const {
     }),
   ],
   // callbacks: {
-  //   authorized({ request: { nextUrl }, auth }) {
-  //     const isLoggedIn = !!auth?.user;
-
-  //     console.log("isLoggedIn", isLoggedIn);
-
-  //     const { pathname } = nextUrl;
-
-  //     if (pathname.startsWith("/auth/login") && isLoggedIn) {
-  //       return Response.redirect(new URL("/", nextUrl));
+  //   async jwt({ token, user }) {
+  //     // Apenas inclua a role no token JWT se o usuário existir
+  //     if (user) {
+  //       token.role = user.role; // Inclua a role no token
   //     }
-
-  //     return !!auth;
+  //     return token;
+  //   },
+  //   async session({ session, token }) {
+  //     // Inclua a role também na sessão
+  //     if (token) {
+  //       session.user.role = token.role;
+  //     }
+  //     return session;
   //   },
   // },
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",
     signOut: "/auth/logout",
@@ -60,5 +65,4 @@ export const {
     verifyRequest: "/auth/verify",
     newUser: "/auth/new-user",
   },
-  secret: process.env.AUTH_SECRET,
 });

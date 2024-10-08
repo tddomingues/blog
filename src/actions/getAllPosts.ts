@@ -18,7 +18,7 @@ export const getPosts = async () => {
     });
     return posts;
   } catch (error) {
-    return null;
+    return [];
   }
 };
 

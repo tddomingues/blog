@@ -13,7 +13,6 @@ import { signIn, useSession } from "next-auth/react";
 import { Error } from "../Error";
 import { useToast } from "@/src/hooks/use-toast";
 
-import { login } from "@/src/actions/login";
 import axios from "axios";
 
 const schema = z.object({
