@@ -27,7 +27,7 @@ const UserMenu = ({ user }: { user: UserProps }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <span className="font-medium text-sm">{user.name}</span>
+      <span className="font-medium text-sm">{user.name?.split(" ")[0]}</span>
     </div>
   );
 };

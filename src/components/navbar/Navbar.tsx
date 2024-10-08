@@ -14,7 +14,7 @@ const Navbar = async () => {
   const user = await currentUser();
   return (
     <div>
-      <div className="border-b py-2 px-4">
+      <div className="border-b p-2">
         <div className="container flex items-center justify-between">
           <Link href={"/"}>
             <h1 className="flex flex-col items-center">
