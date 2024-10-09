@@ -12,9 +12,8 @@ Este é um blog simples focado na área de tecnologias. Ele permite a criação,
 
 ## FUNCIONALIDADES
 
-- Autenticação e Autorização:
-    Admin: Pode criar, editar, deletar e visualizar postagens.
-    Usuário: Pode visualizar postagens e interagir com elas curtindo.
+- Admin: Pode criar, editar, deletar e visualizar postagens.
+- Usuário: Pode visualizar postagens e interagir com elas curtindo.
 - Interação com postagens: Usuários podem curtir postagens.
 - Sistema de busca: Os usuários podem buscar postagens pelo título ou conteúdo.
 - Cadastro e Login: Utiliza autenticação com o Next-Auth para realizar login e registro de usuários.
@@ -52,7 +51,7 @@ npm install
 npx prisma migrate dev
 ````
 
-### Inicie o servidor de desenvolvimento:
+### Iniciar:
 ```bash
 npm run dev
 ````
