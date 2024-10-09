@@ -1,9 +1,10 @@
-// import { signIn } from "@/auth";
-// import { redirect } from "next/navigation";
-import db from "@/src/lib/db";
-// import UserProps from "@/src/types/user";
-import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
+
+//lib
+import db from "@/src/lib/db";
+
+//critography
+import { hash } from "bcryptjs";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
 
   const hashedPassword = await hash(password, 10);
 
-  const newUser = await db.user.create({
+  await db.user.create({
     data: {
       email,
       name,
@@ -40,5 +41,8 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json(newUser, { status: 201 });
+  return NextResponse.json(
+    { message: "Registro feito com sucesso!" },
+    { status: 201 }
+  );
 }

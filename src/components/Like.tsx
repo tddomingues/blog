@@ -1,11 +1,18 @@
 "use client";
 
+//components
 import { Button } from "@/src/components/ui/button";
 
+//icons
 import { ThumbsUp } from "lucide-react";
 
+//actions
 import likePost from "../actions/likePost";
+
+//lib
 import { cn } from "../lib/utils";
+
+//types
 import PostProps from "../types/post";
 
 interface HandleLikeProps {

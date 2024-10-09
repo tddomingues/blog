@@ -1,20 +1,17 @@
 "use client";
+import Link from "next/link";
 
+//components
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
   SheetFooter,
 } from "@/src/components/ui/sheet";
-
-import React from "react";
 import { Button } from "../ui/button";
-import Link from "next/link";
-import { Input } from "../ui/input";
-import { Menu, Search } from "lucide-react";
+
+//icons
+import { Menu } from "lucide-react";
 
 const AuthBtns = () => {
   return (

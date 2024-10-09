@@ -1,5 +1,9 @@
 "use client";
 
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+//components
 import {
   Select,
   SelectContent,
@@ -8,25 +12,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
-
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { Error } from "@/src/components/Error";
 import { Textarea } from "@/src/components/ui/textarea";
 
+//hooks
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useToast } from "../hooks/use-toast";
 import { z } from "zod";
 
-import axios from "axios";
+//actions
+import action from "../actions/actions";
+
+//types
 import UserProps from "../types/user";
 
-import { useRouter } from "next/navigation";
-import { useToast } from "../hooks/use-toast";
-
-import action from "../actions/actions";
 const schema = z.object({
   title: z.string().min(5),
   description: z.string().min(10),

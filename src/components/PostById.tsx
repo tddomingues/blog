@@ -3,18 +3,23 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { Badge } from "@/src/components/ui/badge";
-import { Edit2 } from "lucide-react";
-
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import PostProps from "../types/post";
+//components
+import { Badge } from "@/src/components/ui/badge";
 import DeletePost from "./DeletePost";
+import Like from "./Like";
+
+//icons
+import { Edit2 } from "lucide-react";
+
+//types
+import PostProps from "../types/post";
 import UserProps from "../types/user";
 
-import calculateReadingTime from "../lib/calculateReadingTime";
-import Like from "./Like";
+//libs
+import calculateReadingTime from "../utils/calculateReadingTime";
 
 interface PostByIdProps {
   post: PostProps;

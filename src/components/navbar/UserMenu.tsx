@@ -1,5 +1,8 @@
 "use client";
 
+import { signOut } from "next-auth/react";
+
+//components
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 
-import { signOut } from "next-auth/react";
+//types
 import UserProps from "@/src/types/user";
 
 const UserMenu = ({ user }: { user: UserProps }) => {

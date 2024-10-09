@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 
 import {
   Card,
@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 
-import Link from "next/link";
 import RegisterForm from "@/src/components/authForm/RegisterForm";
 
 const Register = () => {

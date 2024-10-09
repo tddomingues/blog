@@ -1,13 +1,16 @@
-import { currentUser } from "@/src/actions/getCurrentUser";
-import _posts from "@/src/constants/posts";
-
 import Link from "next/link";
 
+//actions
+import { currentUser } from "@/src/actions/getCurrentUser";
+
+//components
 import ListAllPosts from "@/src/components/ListAllPosts";
 import { getPosts } from "@/src/actions/getAllPosts";
 import NewestPost from "@/src/components/NewestPost";
 import { NoPost } from "@/src/components/NoPost";
 import ListMostLikedPosts from "@/src/components/ListMostLikedPosts";
+
+//icons
 import { SquarePen } from "lucide-react";
 
 export const Page = async () => {

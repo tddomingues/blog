@@ -1,13 +1,18 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
+//components
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+
+//hooks
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+//icons
 import { Search } from "lucide-react";
-import { Input } from "./ui/input";
-import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
 
 const schema = z.object({
   search: z.string().min(1),

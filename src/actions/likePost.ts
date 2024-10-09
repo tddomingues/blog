@@ -30,8 +30,6 @@ export default async function likePost(data: LikePostProps) {
     },
   });
 
-  console.log("likePost", likePost);
-
   if (!likePost) {
     revalidatePath(`/post/${data.id_post}`);
 

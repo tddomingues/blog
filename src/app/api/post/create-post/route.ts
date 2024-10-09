@@ -1,7 +1,11 @@
-import { currentUser } from "@/src/actions/getCurrentUser";
-import db from "@/src/lib/db";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+
+//actions
+import { currentUser } from "@/src/actions/getCurrentUser";
+
+//lib
+import db from "@/src/lib/db";
 
 export async function POST(request: Request) {
   const user = await currentUser();

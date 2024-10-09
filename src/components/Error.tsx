@@ -1,12 +1,12 @@
 import { CircleAlert } from "lucide-react";
 import { cn } from "../lib/utils";
-import React from "react";
+import { forwardRef } from "react";
 
 interface MessageProps extends React.HTMLAttributes<HTMLDivElement> {
   message: string;
 }
 
-const Error = React.forwardRef<HTMLDivElement, MessageProps>(
+const Error = forwardRef<HTMLDivElement, MessageProps>(
   ({ className, message, ...props }, ref) => (
     <span
       className={cn(

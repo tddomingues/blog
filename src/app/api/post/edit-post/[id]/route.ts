@@ -1,10 +1,13 @@
-import { currentUser } from "@/src/actions/getCurrentUser";
-import db from "@/src/lib/db";
-
 import { NextResponse } from "next/server";
 
+//actions
+import { currentUser } from "@/src/actions/getCurrentUser";
+
+//lib
+import db from "@/src/lib/db";
+
 interface ParamsProps {
-  id?: string;
+  id: string;
 }
 
 export async function PUT(

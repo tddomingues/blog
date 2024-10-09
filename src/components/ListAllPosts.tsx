@@ -2,13 +2,18 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Card } from "./ui/card";
-import { Badge } from "@/src/components/ui/badge";
-import { Calendar, UserRound } from "lucide-react";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
+//components
+import { Card } from "./ui/card";
+import { Badge } from "@/src/components/ui/badge";
+
+//icons
+import { Calendar, UserRound } from "lucide-react";
+
+//types
 import PostProps from "../types/post";
 
 interface ListAllPostsProps {
@@ -24,8 +29,6 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 w-full">
         {posts.map((post, index) => (
           <Card key={index} className="flex flex-col gap-2">
-            {" "}
-            {/* lg:max-w-[400px] */}
             <div className="relative h-[200px] w-full">
               <Image
                 alt={post.title}

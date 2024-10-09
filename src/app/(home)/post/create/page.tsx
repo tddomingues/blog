@@ -1,6 +1,8 @@
+//actions
 import { currentUser } from "@/src/actions/getCurrentUser";
+
+//components
 import FormPost from "@/src/components/FormPost";
-import React from "react";
 
 const CreatePost = async () => {
   const user = await currentUser();

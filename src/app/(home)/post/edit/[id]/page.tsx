@@ -1,12 +1,15 @@
+//actions
 import { getPosts } from "@/src/actions/getAllPosts";
 import { currentUser } from "@/src/actions/getCurrentUser";
+
+//components
 import FormPost from "@/src/components/FormPost";
-import PostProps from "@/src/types/post";
-import { Edit2 } from "lucide-react";
-import React from "react";
+import { NoPost } from "@/src/components/NoPost";
 
 interface EditPostProps {
-  params: any;
+  params: {
+    id: string;
+  };
 }
 
 const EditPost = async ({ params }: EditPostProps) => {
@@ -15,7 +18,7 @@ const EditPost = async ({ params }: EditPostProps) => {
 
   const post = posts && posts.find((post) => post.id === params.id);
 
-  if (!post) return null;
+  if (!post) return <NoPost />;
 
   const defaultValuesForm = {
     title: post.title,

@@ -1,18 +1,20 @@
 "use client";
 
+import { useState } from "react";
+
+//components
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { Button } from "./ui/button";
-import { Search } from "lucide-react";
 import SearchPosts from "./FormSearch";
-import { useState } from "react";
+import { Button } from "./ui/button";
+
+//icons
+import { Search } from "lucide-react";
 
 const ModalSearch = () => {
   const [openSearch, setOpenSearch] = useState(false);

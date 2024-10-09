@@ -1,6 +1,6 @@
-import LoginForm from "@/src/components/authForm/LoginForm";
-import React from "react";
+import Link from "next/link";
 
+//components
 import {
   Card,
   CardContent,
@@ -8,8 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
-
-import Link from "next/link";
+import LoginForm from "@/src/components/authForm/LoginForm";
 
 const Login = () => {
   return (

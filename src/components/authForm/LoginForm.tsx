@@ -1,19 +1,19 @@
 "use client";
+import { signIn } from "next-auth/react";
+
+//components
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Error } from "../Error";
 
+//hooks
+import { useToast } from "@/src/hooks/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signIn, useSession } from "next-auth/react";
-import { Error } from "../Error";
-import { useToast } from "@/src/hooks/use-toast";
-
-import axios from "axios";
 
 const schema = z.object({
   email: z.string().email(),

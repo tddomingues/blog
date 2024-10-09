@@ -1,10 +1,12 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
+//components
 import ListPostsSearch from "@/src/components/ListPostsSearch";
 
+//hooks
 import useGetPostsSearch from "@/src/hooks/useGetPostsSearch";
-
-import { useSearchParams } from "next/navigation";
 
 const Search = () => {
   const params = useSearchParams();

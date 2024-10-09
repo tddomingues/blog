@@ -1,5 +1,7 @@
-import db from "@/src/lib/db";
 import { NextResponse } from "next/server";
+
+//lib
+import db from "@/src/lib/db";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

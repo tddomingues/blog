@@ -1,14 +1,19 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { Card } from "./ui/card";
-import { Badge } from "@/src/components/ui/badge";
-import { Calendar, UserRound } from "lucide-react";
-
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
+import Link from "next/link";
+import Image from "next/image";
+
+//components
+import { Card } from "./ui/card";
+import { Badge } from "@/src/components/ui/badge";
+
+//icons
+import { Calendar, UserRound } from "lucide-react";
+
+//types
 import PostProps from "../types/post";
 
 interface ListAllPostsProps {

@@ -1,19 +1,22 @@
 "use client";
+import { useRouter } from "next/navigation";
 
+import axios from "axios";
+
+//icons
 import { LoaderCircle } from "lucide-react";
+
+//components
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import axios from "axios";
+import { Error } from "../Error";
 
+//hooks
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useForm, SubmitHandler } from "react-hook-form";
-
-import { Error } from "../Error";
 import { useToast } from "@/src/hooks/use-toast";
-import { useRouter } from "next/navigation";
 
 const schema = z
   .object({

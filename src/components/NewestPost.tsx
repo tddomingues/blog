@@ -1,11 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Card } from "./ui/card";
-import { Badge } from "@/src/components/ui/badge";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
+//components
+import { Card } from "./ui/card";
+import { Badge } from "@/src/components/ui/badge";
+
+//types
 import PostProps from "../types/post";
 
 interface NewestPostProps {

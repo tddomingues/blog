@@ -1,5 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
 
+import axios from "axios";
+
+//components
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,9 +15,10 @@ import {
   AlertDialogTrigger,
 } from "@/src/components/ui/alert-dialog";
 
-import axios from "axios";
+//icons
 import { Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+
+//actions
 import action from "../actions/actions";
 
 const BtnDelete = ({ id_post }: { id_post: string }) => {
