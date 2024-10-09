@@ -1,20 +1,17 @@
-import AuthBtns from "./AuthBtns";
-
-import UserMenu from "./UserMenu";
-import UserProps from "@/src/types/user";
-import { currentUser } from "@/src/actions/getCurrentUser";
 import Link from "next/link";
 
-import ModalSearch from "../ModalSearch";
+//actions
+import { currentUser } from "@/src/actions/getCurrentUser";
 
-interface NavbarProps {
-  user?: UserProps | null;
-}
+//components
+import AuthBtns from "./AuthBtns";
+import UserMenu from "./UserMenu";
+import ModalSearch from "../ModalSearch";
 
 const Navbar = async () => {
   const user = await currentUser();
   return (
-    <div className="border-b py-2">
+    <div className="border-b py-4">
       <div className="container lg:container flex items-center justify-between">
         <Link href={"/"}>
           <h1 className="flex flex-col items-center">
@@ -22,7 +19,7 @@ const Navbar = async () => {
           </h1>
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <ModalSearch />
 
           <div className="flex items-center flex-col justify-end gap-8 relative right-0 h-full">

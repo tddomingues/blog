@@ -31,7 +31,7 @@ const EditPost = async ({ params }: EditPostProps) => {
     <div className="container">
       {user?.role === "admin" ? (
         <>
-          <h2 className="my-8 text-3xl font-extrabold">Editar Postagem</h2>
+          <h2 className="mt-8 mb-4 text-2xl font-bold">Editar Postagem</h2>
           <FormPost
             defaultValuesForm={defaultValuesForm}
             user={user}

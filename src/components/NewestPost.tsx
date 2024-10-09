@@ -19,10 +19,8 @@ const NewestPost = async ({ post }: NewestPostProps) => {
   return (
     <Card className="flex flex-col gap-2 relative">
       <div className="p-3">
-        <h1 className="text-3xl font-extrabold mb-2">{post.title}</h1>
-        <p className="text-base line-clamp-2 text-primary/80">
-          {post.description}
-        </p>
+        <h1 className="text-2xl font-bold mb-2">{post.title}</h1>
+        <p className="line-clamp-2 text-primary/80">{post.description}</p>
       </div>
 
       <Link href={`/post/${post.id}`}>
@@ -37,12 +35,15 @@ const NewestPost = async ({ post }: NewestPostProps) => {
       </Link>
 
       <div className="absolute bottom-3 left-3">
-        <Badge variant="default" className="text-sm capitalize mr-2">
+        <Badge
+          variant="default"
+          className="text-sm font-normal capitalize mr-2"
+        >
           {format(post.create_at, "d MMM, yyyy", {
             locale: ptBR,
           })}
         </Badge>
-        <Badge variant="default" className="text-sm capitalize">
+        <Badge variant="default" className="text-sm font-normal  capitalize">
           {post.category}
         </Badge>
       </div>

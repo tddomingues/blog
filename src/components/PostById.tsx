@@ -28,7 +28,7 @@ interface PostByIdProps {
 
 const PostById = ({ post, user }: PostByIdProps) => {
   return (
-    <div className=" container flex gap-4 flex-col mt-4">
+    <div className="container flex gap-4 flex-col mt-8">
       {user?.role === "admin" && (
         <div className="self-end flex gap-4">
           <DeletePost id_post={post.id} />
@@ -43,13 +43,13 @@ const PostById = ({ post, user }: PostByIdProps) => {
       )}
       <div className="w-full h-[300px] relative">
         <Image
-          alt=""
+          alt={post.title}
           src={post.image}
           fill
-          className="object-cover object-center"
+          className="object-cover"
         />
-        <div className="absolute bottom-4 left-4 ">
-          <Badge variant="default" className="text-sm capitalize">
+        <div className="absolute bottom-2 left-2 ">
+          <Badge variant="default" className="text-sm font-normal capitalize">
             {post.category}
           </Badge>
         </div>
@@ -74,7 +74,7 @@ const PostById = ({ post, user }: PostByIdProps) => {
         </div>
       </div>
       <div className="w-full">
-        <h2 className="text-3xl font-extrabold mt-4 ">{post.title}</h2>
+        <h1 className="text-2xl font-bold mt-4 ">{post.title}</h1>
 
         <p className="mt-2 text-primary/80">{post.description}</p>
       </div>

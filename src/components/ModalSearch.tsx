@@ -21,7 +21,11 @@ const ModalSearch = () => {
   return (
     <Dialog onOpenChange={setOpenSearch} open={openSearch}>
       <DialogTrigger asChild>
-        <Button variant="link" onClick={() => setOpenSearch(!openSearch)}>
+        <Button
+          variant="link"
+          className="p-2"
+          onClick={() => setOpenSearch(!openSearch)}
+        >
           <Search
             className="text-primary/80 hover:text-primary duration-200"
             strokeWidth={1}
@@ -32,7 +36,7 @@ const ModalSearch = () => {
         <DialogHeader>
           <DialogTitle>Pesquisar Conteúdo</DialogTitle>
         </DialogHeader>
-        <div className=" w-[80%] m-auto">
+        <div>
           <SearchPosts onOpenChange={setOpenSearch} open={openSearch} />
         </div>
       </DialogContent>

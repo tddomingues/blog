@@ -24,7 +24,7 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
   return (
     <div className="flex-1">
       <div className="mb-1">
-        <h2 className="text-xl font-extrabold">Todos as Postagens</h2>
+        <h2 className="text-lg font-medium">Todos as Postagens</h2>
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 w-full">
         {posts.map((post, index) => (
@@ -54,13 +54,13 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
               </Badge>
             </div>
             <div className="flex flex-col px-2 mb-4">
-              <h1 className="font-bold text-xl line-clamp-2 mb-1">
+              <h3 className="font-semibold text-xl line-clamp-2 mb-1">
                 {post.title}
-              </h1>
+              </h3>
               <p className="line-clamp-2 text-primary/80">{post.description}</p>
               <Link
                 href={`/post/${post.id}`}
-                className="font-bold underline mt-4"
+                className="font-medium underline mt-4"
               >
                 Ler mais
               </Link>

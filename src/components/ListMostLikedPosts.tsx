@@ -23,7 +23,7 @@ const ListMostLikedPosts = async ({ posts }: NewestPostProps) => {
   return (
     <div className="flex flex-col gap-1">
       <div>
-        <h2 className="text-xl font-extrabold">Mais Curtidos</h2>
+        <h2 className="text-lg font-medium">Mais Curtidos</h2>
       </div>
       <div className="flex overflow-x-auto [&::-webkit-scrollbar]:hidden gap-2 lg:flex-col">
         {mostLikedPosts.map((post, index) => (
@@ -49,7 +49,9 @@ const ListMostLikedPosts = async ({ posts }: NewestPostProps) => {
                     locale: ptBR,
                   })}
                 </span>
-                <h3 className="font-medium line-clamp-2">{post.title}</h3>
+                <h3 className="font-lg font-semibold line-clamp-2">
+                  {post.title}
+                </h3>
               </div>
             </Card>
           </Link>

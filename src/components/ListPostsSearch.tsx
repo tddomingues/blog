@@ -23,14 +23,12 @@ interface ListAllPostsProps {
 const ListPostsSearch = ({ posts }: ListAllPostsProps) => {
   return (
     <div className="flex-1">
-      <div className="mt-8 mb-4 ">
-        <h2 className="text-3xl font-extrabold">Sua Busca</h2>
+      <div className="mt-8 mb-4">
+        <h1 className="text-2xl font-bold">Sua Busca</h1>
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 w-full">
         {posts.map((post, index) => (
           <Card key={index} className="flex flex-col gap-2">
-            {" "}
-            {/* lg:max-w-[400px] */}
             <div className="relative h-[200px] w-full">
               <Image
                 alt={post.title}
@@ -56,13 +54,13 @@ const ListPostsSearch = ({ posts }: ListAllPostsProps) => {
               </Badge>
             </div>
             <div className="flex flex-col px-2 mb-4">
-              <h1 className="font-bold text-xl line-clamp-2 mb-1">
+              <h2 className="text-2xl font-bold line-clamp-2 mb-1">
                 {post.title}
-              </h1>
+              </h2>
               <p className="line-clamp-2 text-primary/80">{post.description}</p>
               <Link
                 href={`/post/${post.id}`}
-                className="font-bold underline mt-4"
+                className="font-medium underline mt-4"
               >
                 Ler mais
               </Link>

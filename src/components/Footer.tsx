@@ -1,29 +1,16 @@
-import { Github, Mail } from "lucide-react";
+import { Github, Linkedin, LinkedinIcon, Mail } from "lucide-react";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
     <footer className="border-t mt-8">
-      <div className="p-2 lg:container lg:px-4">
-        <div className="flex justify-between gap-4">
-          <div className="max-w-60">
-            <h4 className="font-bold">Sobre</h4>
-            <p className="text-primary/80 text-sm">
-              O site é meramente ilustrativo. Apenas para fins didáticos.{" "}
-            </p>
-          </div>
-          <div className="mt-1">
-            <div className="flex items-center gap-1 mb-2">
-              <Mail className="text-primary/80" />
-              <span className="text-sm text-primary/80">
-                tiago3d2s3@gmail.com
-              </span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Github className="text-primary/80" />
-              <span className="text-sm text-primary/80">Meu GitHub</span>
-            </div>
-          </div>
+      <div className="py-4 container lg:container flex justify-between items-center gap-4">
+        <div>
+          <p className="text-sm">©2024 tgdomingues.</p>
         </div>
+        <Link href="https://github.com/tddomingues" className="cursor-pointer">
+          <Linkedin className="text-primary/80" />
+        </Link>
       </div>
     </footer>
   );

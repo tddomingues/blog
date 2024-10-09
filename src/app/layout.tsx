@@ -24,7 +24,6 @@ export default function RootLayout({
       <html lang="pt-br">
         <body className={inter.className}>
           <main>{children}</main>
-
           <Toaster />
         </body>
       </html>
