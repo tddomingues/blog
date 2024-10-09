@@ -15,11 +15,11 @@ interface ListAllPostsProps {
   posts: PostProps[];
 }
 
-const ListAllPosts = ({ posts }: ListAllPostsProps) => {
+const ListPostsSearch = ({ posts }: ListAllPostsProps) => {
   return (
     <div className="flex-1">
-      <div className="mb-1">
-        <h2 className="text-xl font-extrabold">Todos as Postagens</h2>
+      <div className="mt-8 mb-4 ">
+        <h2 className="text-3xl font-extrabold">Sua Busca</h2>
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 w-full">
         {posts.map((post, index) => (
@@ -69,4 +69,4 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
   );
 };
 
-export default ListAllPosts;
+export default ListPostsSearch;

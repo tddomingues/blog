@@ -23,7 +23,7 @@ export const Page = async () => {
             href={"/post/create"}
             className="flex items-center gap-2 transition-colors duration-200 text-primary/80 hover:text-sky-500"
           >
-            <SquarePen size={18} />
+            <SquarePen size={18} strokeWidth={1.5} />
             <span className="text-sm">Escrever</span>
           </Link>
         )}

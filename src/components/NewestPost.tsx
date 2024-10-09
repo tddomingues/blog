@@ -16,7 +16,7 @@ const NewestPost = async ({ post }: NewestPostProps) => {
   return (
     <Card className="flex flex-col gap-2 relative">
       <div className="p-3">
-        <h1 className="text-3xl font-extrabold">{post.title}</h1>
+        <h1 className="text-3xl font-extrabold mb-2">{post.title}</h1>
         <p className="text-base line-clamp-2 text-primary/80">
           {post.description}
         </p>

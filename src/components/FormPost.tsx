@@ -5,11 +5,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/src/components/ui/select";
-import { DialogFooter } from "@/src/components/ui/dialog";
+
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -23,10 +22,10 @@ import { z } from "zod";
 
 import axios from "axios";
 import UserProps from "../types/user";
-import { useState } from "react";
+
 import { useRouter } from "next/navigation";
 import { useToast } from "../hooks/use-toast";
-import { revalidatePath } from "next/cache";
+
 import action from "../actions/actions";
 const schema = z.object({
   title: z.string().min(5),

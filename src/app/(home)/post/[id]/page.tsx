@@ -10,15 +10,9 @@ const Post = async (props: any) => {
   const user = await currentUser();
   const posts = await getPosts();
 
-  return (
-    <>
-      {posts ? (
-        <PostById posts={posts} user={user} post_id={params.id} />
-      ) : (
-        <NoPost />
-      )}
-    </>
-  );
+  const post = await posts.find((post) => post.id === params.id);
+
+  return <>{post ? <PostById post={post} user={user} /> : <NoPost />}</>;
 };
 
 export default Post;

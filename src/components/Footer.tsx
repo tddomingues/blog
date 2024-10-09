@@ -1,9 +1,8 @@
 import { Github, Mail } from "lucide-react";
-import { Badge } from "./ui/badge";
 
 export const Footer = () => {
   return (
-    <footer className="border-t mt-4">
+    <footer className="border-t mt-8">
       <div className="p-2 lg:container lg:px-4">
         <div className="flex justify-between gap-4">
           <div className="max-w-60">

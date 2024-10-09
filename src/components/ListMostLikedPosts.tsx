@@ -13,8 +13,9 @@ interface NewestPostProps {
 }
 
 const ListMostLikedPosts = async ({ posts }: NewestPostProps) => {
-  const mostLikedPosts =
-    posts && posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 4);
+  const mostLikedPosts = posts
+    .sort((a, b) => b.likes.length - a.likes.length)
+    .slice(0, 4);
 
   return (
     <div className="flex flex-col gap-1">

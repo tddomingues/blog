@@ -37,7 +37,7 @@ const EditPost = async ({ params }: EditPostProps) => {
           />
         </>
       ) : (
-        <h2 className="text-5xl font-medium text-center mt-4">
+        <h2 className="text-3xl font-extrabold text-center mt-4">
           Sem autorização
         </h2>
       )}

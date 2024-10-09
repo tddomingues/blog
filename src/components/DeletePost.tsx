@@ -30,7 +30,7 @@ const BtnDelete = ({ id_post }: { id_post: string }) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div className="flex items-center gap-1 cursor-pointer transition-colors duration-200  text-primary/80 hover:text-destructive">
-          <Trash2 size={16} />
+          <Trash2 size={16} strokeWidth={1.5} />
           <span className="text-sm">Excluir</span>
         </div>
       </AlertDialogTrigger>
