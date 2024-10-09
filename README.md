@@ -4,7 +4,7 @@
 
 ## RESULTADO
 
-![preview](https://github.com/user-attachments/assets/e77d97eb-8445-4613-b12f-a4fe5ddf5712)
+https://github.com/user-attachments/assets/e77d97eb-8445-4613-b12f-a4fe5ddf5712
 
 ## DESCRIÇÃO
 
