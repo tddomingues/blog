@@ -97,11 +97,11 @@ const RegisterForm = () => {
           )}
         </div>
       </div>
-      <Button type="submit" className="w-full mt-8" disabled={isSubmitting}>
+      <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
         {isSubmitting ? (
           <LoaderCircle className="animate-spin" size={20} />
         ) : (
-          "Registrar"
+          "Cadastrar"
         )}
       </Button>
     </form>
