@@ -18,7 +18,7 @@ const CreatePost = async () => {
   return (
     <div>
       {user?.role === "admin" ? (
-        <Card className="p-4 mt-8">
+        <Card className="p-4 mt-8 container">
           <h1 className="mb-4 text-2xl font-bold">Criar Postagem</h1>
           <FormPost
             user={user}
@@ -27,7 +27,9 @@ const CreatePost = async () => {
           />
         </Card>
       ) : (
-        <h2 className="text-2xl font-bold text-center mt-4">Sem autorização</h2>
+        <h2 className="text-2xl font-bold text-center mt-4 container">
+          Sem autorização
+        </h2>
       )}
     </div>
   );

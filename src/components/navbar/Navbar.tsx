@@ -12,7 +12,7 @@ const Navbar = async () => {
   const user = await currentUser();
   return (
     <div className="border-b py-4">
-      <div className="container lg:container flex items-center justify-between">
+      <div className="container flex items-center justify-between">
         <Link href={"/"}>
           <h1 className="flex flex-col items-center">
             <span className="text-lg font-extrabold lg:text-xl"> TGBLOG</span>

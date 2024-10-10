@@ -10,9 +10,23 @@ import { ptBR } from "date-fns/locale";
 import { Badge } from "@/src/components/ui/badge";
 import DeletePost from "./DeletePost";
 import Like from "./Like";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/src/components/ui/dropdown-menu";
 
 //icons
-import { Edit2 } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  Calendar,
+  Edit2,
+  EllipsisVertical,
+} from "lucide-react";
 
 //types
 import PostProps from "../types/post";
@@ -20,6 +34,8 @@ import UserProps from "../types/user";
 
 //libs
 import calculateReadingTime from "../utils/calculateReadingTime";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
 
 interface PostByIdProps {
   post: PostProps;
@@ -27,20 +43,38 @@ interface PostByIdProps {
 }
 
 const PostById = ({ post, user }: PostByIdProps) => {
+  const router = useRouter();
+
   return (
-    <div className="container flex gap-4 flex-col mt-8">
-      {user?.role === "admin" && (
-        <div className="self-end flex gap-4">
-          <DeletePost id_post={post.id} />
-          <Link
-            href={`edit/${post.id}`}
-            className="flex items-center gap-1 cursor-pointer transition-colors duration-200 text-primary/80 hover:text-sky-400"
-          >
-            <Edit2 size={16} strokeWidth={1.5} />
-            <span className="text-sm">Editar</span>
-          </Link>
-        </div>
-      )}
+    <div className="container flex gap-4 flex-col mt-4">
+      <div className="flex justify-between">
+        <Link href="/">
+          <ArrowLeft className="hover:text-primary/80 duration-200" />
+        </Link>
+        {user?.role === "admin" && (
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <EllipsisVertical className="hover:text-primary/80 duration-200" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="mr-1">
+                <DropdownMenuItem>
+                  <Link
+                    href={`edit/${post.id}`}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <Edit2 size={16} />
+                    <span className="text-sm">Editar</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <DeletePost id_post={post.id} />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
+      </div>
       <div className="w-full h-[300px] relative">
         <Image
           alt={post.title}
@@ -63,12 +97,22 @@ const PostById = ({ post, user }: PostByIdProps) => {
 
         <div className="flex flex-col">
           <span>{post!.user.name}</span>
-          <span className="text-sm text-primary/80">
+          <span className="text-sm text-primary/80 flex gap-1">
+            <BookOpen
+              size={14}
+              strokeWidth={1.5}
+              className="text-primary/80 mt-[2px]"
+            />
             {calculateReadingTime(post.description)}s de leitura
           </span>
         </div>
         <div className="self-end mb-[-1px]">
-          <span className="text-sm text-primary/80">
+          <span className="text-sm text-primary/80 flex gap-1">
+            <Calendar
+              size={14}
+              strokeWidth={1.5}
+              className="text-primary/80 mt-[2px]"
+            />
             {format(post.create_at, "d MMM, yyyy", { locale: ptBR })}
           </span>
         </div>

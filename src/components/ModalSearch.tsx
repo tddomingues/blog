@@ -27,8 +27,8 @@ const ModalSearch = () => {
           onClick={() => setOpenSearch(!openSearch)}
         >
           <Search
-            className="text-primary/80 hover:text-primary duration-200"
-            strokeWidth={1}
+            className="text-primary hover:text-primary/80 duration-200"
+            strokeWidth={1.5}
           />
         </Button>
       </DialogTrigger>

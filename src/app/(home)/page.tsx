@@ -20,11 +20,11 @@ export const Page = async () => {
 
   return (
     <>
-      <div className="flex justify-end my-4">
+      <div className="flex justify-end my-4 container">
         {user?.role === "admin" && (
           <Link
             href={"/post/create"}
-            className="flex items-center gap-2 transition-colors duration-200 text-primary/80 hover:text-sky-500"
+            className="flex items-center gap-2 transition-colors duration-200 text-primary hover:text-primary/80"
           >
             <SquarePen size={18} strokeWidth={1.5} />
             <span className="text-sm">Escrever</span>
@@ -32,7 +32,7 @@ export const Page = async () => {
         )}
       </div>
       {posts.length > 0 ? (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 container">
           <NewestPost post={posts[0]} />
           {posts.length > 1 && (
             <div className="flex flex-col gap-6 lg:flex-row-reverse lg:justify-between">

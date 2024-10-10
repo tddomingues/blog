@@ -26,7 +26,7 @@ const ListPostsSearch = ({ posts }: ListAllPostsProps) => {
       <div className="mt-8 mb-4">
         <h1 className="text-2xl font-bold">Sua Busca</h1>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
         {posts.map((post, index) => (
           <Card key={index} className="flex flex-col gap-2">
             <div className="relative h-[200px] w-full">
@@ -37,7 +37,7 @@ const ListPostsSearch = ({ posts }: ListAllPostsProps) => {
                 className="object-cover rounded-t-xl"
               />
             </div>
-            <div className="px-2 mt-1">
+            <div className="px-4 mt-2">
               <Badge variant="outline" className="text-sm font-normal mr-2">
                 <span className="mr-2">
                   <UserRound size={16} />
@@ -53,7 +53,7 @@ const ListPostsSearch = ({ posts }: ListAllPostsProps) => {
                 })}
               </Badge>
             </div>
-            <div className="flex flex-col px-2 mb-4">
+            <div className="flex flex-col px-4  mb-4">
               <h2 className="text-2xl font-bold line-clamp-2 mb-1">
                 {post.title}
               </h2>
