@@ -9,6 +9,9 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Error } from "../Error";
 
+//icon
+import { FcGoogle } from "react-icons/fc";
+
 //hooks
 import { useToast } from "@/src/hooks/use-toast";
 import { z } from "zod";
@@ -37,46 +40,62 @@ const LoginForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    signIn("credentials", {
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    await signIn("credentials", {
       ...data,
-      redirectTo: "/",
+      redirect: false,
     }).then((callback) => {
-      if (callback?.error) {
+      if (callback?.error === "CredentialsSignin") {
         toast({
           variant: "destructive",
           title: "Ocorreu um erro",
-          description: "Erro de credenciais",
+          description: "E-mail ou senha incorretos",
         });
-      }
-
-      if (callback?.ok) {
+      } else {
         router.push("/");
       }
     });
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid gap-4 py-4">
-        <div>
-          <Label className="text-right">E-mail</Label>
-          <Input type="text" {...register("email")} />
-          {errors.email && <Error message="E-mail inválido" />}
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid gap-4 py-4">
+          <div>
+            <Label className="text-right">E-mail</Label>
+            <Input type="text" {...register("email")} />
+            {errors.email && <Error message="E-mail inválido" />}
+          </div>
+          <div>
+            <Label className="text-right">Senha</Label>
+            <Input type="password" {...register("password")} />
+            {errors.password && <Error message="Senha muito curta" />}
+          </div>
         </div>
-        <div>
-          <Label className="text-right">Senha</Label>
-          <Input type="password" {...register("password")} />
-          {errors.password && <Error message="Senha muito curta" />}
-        </div>
+        <Button type="submit" className="w-full mt-2" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <LoaderCircle className="animate-spin" size={20} />
+          ) : (
+            "Entrar"
+          )}
+        </Button>
+      </form>
+      <div className="flex items-center gap-2 mt-4">
+        <span className="flex-1 h-[1px] rounded-xl border bg-card shadow"></span>
+        <span>ou</span>
+        <span className="flex-1 h-[1px] rounded-xl border bg-card shadow"></span>
       </div>
-      <Button type="submit" className="w-full mt-8" disabled={isSubmitting}>
-        {isSubmitting ? (
-          <LoaderCircle className="animate-spin" size={20} />
-        ) : (
-          "Entrar"
-        )}
+      <Button
+        variant="secondary"
+        className="w-full mt-4"
+        onClick={() =>
+          signIn("google", {
+            callbackUrl: "/",
+          })
+        }
+      >
+        <FcGoogle size={20} />
       </Button>
-    </form>
+    </>
   );
 };
 

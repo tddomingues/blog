@@ -8,38 +8,67 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String
-  password String
-  role     String  @default("user")
-  active   Boolean @default(false)
-  create_at DateTime @default(now())
-  Post     Post[]
+  id            String    @id @default(uuid())
+  name          String?
+  email         String? @unique
+  emailVerified DateTime? @map("email_verified")
+  password      String?
+  image         String?
+  role          String?    @default("user")
+  create_at     DateTime  @default(now())
+  Post          Post[]
   likes         Like[]
+  accounts      Account[]
+  sessions Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Post {
-  id           String @id @default(uuid())
-  title        String
-  description  String
-  likes     Like[]
-  image        String
-  reading_time Float
-  category     String
-  create_at DateTime @default(now())
-  fk_user_id   String
-  user         User   @relation(fields: [fk_user_id], references: [id])
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  likes       Like[]
+  image       String
+  category    String
+  create_at   DateTime @default(now())
+  fk_user_id  String
+  user        User     @relation(fields: [fk_user_id], references: [id], onDelete: Cascade)
 }
 
 model Like {
-  id           String @id @default(uuid())
+  id        String   @id @default(uuid())
   create_at DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  fk_user_id   String
-  user User @relation(fields: [fk_user_id], references: [id], onDelete: Cascade)
+  fk_user_id String
+  user       User   @relation(fields: [fk_user_id], references: [id], onDelete: Cascade)
 
-  fk_post_id   String
-  post Post @relation(fields: [fk_post_id], references: [id], onDelete: Cascade)
+  fk_post_id String
+  post       Post   @relation(fields: [fk_post_id], references: [id], onDelete: Cascade)
 }

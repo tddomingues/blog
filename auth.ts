@@ -1,7 +1,10 @@
-import axios from "axios";
 import NextAuth from "next-auth";
+import Adapter from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import db from "./src/lib/db";
+import bcrypt from "bcryptjs";
 
 export const {
   signIn,
@@ -10,7 +13,12 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   debug: true,
+  adapter: PrismaAdapter(db) as Adapter,
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
     Credentials({
       name: "credentials",
       credentials: {
@@ -26,14 +34,16 @@ export const {
           where: {
             email: credentials.email,
           },
-          select: {
-            name: true,
-            email: true,
-            role: true,
-          },
         });
 
-        if (user) {
+        if (!user) return null;
+
+        const passwordMatch = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+
+        if (passwordMatch) {
           return user;
         }
 
@@ -41,22 +51,13 @@ export const {
       },
     }),
   ],
-  // callbacks: {
-  //   async jwt({ token, user }) {
-  //     // Apenas inclua a role no token JWT se o usuário existir
-  //     if (user) {
-  //       token.role = user.role; // Inclua a role no token
-  //     }
-  //     return token;
-  //   },
-  //   async session({ session, token }) {
-  //     // Inclua a role também na sessão
-  //     if (token) {
-  //       session.user.role = token.role;
-  //     }
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    async session({ session, user }) {
+      session.user = { ...session.user, id: user.id };
+
+      return session;
+    },
+  },
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",
