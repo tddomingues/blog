@@ -26,7 +26,7 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
       <div className="mb-1">
         <h2 className="text-lg font-medium">Todos as Postagens</h2>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2 w-full">
+      <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
         {posts.map((post, index) => (
           <Card key={index} className="flex flex-col gap-2">
             <div className="relative h-[200px] w-full">

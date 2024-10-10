@@ -73,7 +73,6 @@ const FormPost = ({
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     const newData = {
       ...data,
-      reading_time: 0,
       fk_user_id: user!.id,
     };
 

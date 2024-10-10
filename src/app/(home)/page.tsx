@@ -31,13 +31,15 @@ export const Page = async () => {
           </Link>
         )}
       </div>
-      {posts?.length > 0 ? (
+      {posts.length > 0 ? (
         <div className="flex flex-col gap-6">
           <NewestPost post={posts[0]} />
-          <div className="flex flex-col gap-6 lg:flex-row-reverse lg:justify-between">
-            <ListMostLikedPosts posts={posts} />
-            <ListAllPosts posts={posts.slice(1)} />
-          </div>
+          {posts.length > 1 && (
+            <div className="flex flex-col gap-6 lg:flex-row-reverse lg:justify-between">
+              <ListMostLikedPosts posts={posts} />
+              <ListAllPosts posts={posts.slice(1, 4)} />
+            </div>
+          )}
         </div>
       ) : (
         <NoPost />

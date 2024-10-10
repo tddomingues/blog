@@ -3,6 +3,7 @@ import { currentUser } from "@/src/actions/getCurrentUser";
 
 //components
 import FormPost from "@/src/components/FormPost";
+import { Card } from "@/src/components/ui/card";
 
 const CreatePost = async () => {
   const user = await currentUser();
@@ -15,16 +16,16 @@ const CreatePost = async () => {
   };
 
   return (
-    <div className="lg:container">
+    <div>
       {user?.role === "admin" ? (
-        <>
-          <h1 className="mt-8 mb-4 text-2xl font-bold">Criar Postagem</h1>
+        <Card className="p-4 mt-8">
+          <h1 className="mb-4 text-2xl font-bold">Criar Postagem</h1>
           <FormPost
             user={user}
             defaultValuesForm={defaultValuesForm}
             typePost="create"
           />
-        </>
+        </Card>
       ) : (
         <h2 className="text-2xl font-bold text-center mt-4">Sem autorização</h2>
       )}

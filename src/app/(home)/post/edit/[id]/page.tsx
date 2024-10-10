@@ -5,6 +5,7 @@ import { currentUser } from "@/src/actions/getCurrentUser";
 //components
 import FormPost from "@/src/components/FormPost";
 import { NoPost } from "@/src/components/NoPost";
+import { Card } from "@/src/components/ui/card";
 
 interface EditPostProps {
   params: {
@@ -28,17 +29,17 @@ const EditPost = async ({ params }: EditPostProps) => {
   };
 
   return (
-    <div className="container">
+    <div>
       {user?.role === "admin" ? (
-        <>
-          <h2 className="mt-8 mb-4 text-2xl font-bold">Editar Postagem</h2>
+        <Card className="p-4 mt-8">
+          <h2 className="mb-4 text-2xl font-bold">Editar Postagem</h2>
           <FormPost
             defaultValuesForm={defaultValuesForm}
             user={user}
             id_post={params.id}
             typePost="edit"
           />
-        </>
+        </Card>
       ) : (
         <h2 className="text-3xl font-extrabold text-center mt-4">
           Sem autorização

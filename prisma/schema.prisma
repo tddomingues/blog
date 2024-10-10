@@ -9,17 +9,17 @@ datasource db {
 
 model User {
   id            String    @id @default(uuid())
-  name          String?
-  email         String? @unique
+  name          String
+  email         String    @unique
   emailVerified DateTime? @map("email_verified")
   password      String?
   image         String?
-  role          String?    @default("user")
+  role          String    @default("user")
   create_at     DateTime  @default(now())
   Post          Post[]
   likes         Like[]
   accounts      Account[]
-  sessions Session[]
+  sessions      Session[]
 }
 
 model Account {
