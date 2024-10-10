@@ -37,8 +37,8 @@ Este é um blog simples focado na área de tecnologias. Ele permite a criação,
 
 ## INSTALAÇÃO
 ### Clone o repositório:
-```bash
-git clone https://github.com/tddomingues/fullstack-lista-de-tarefas.git
+```bash 
+git clone https://github.com/tddomingues/blog.git
 ````
 
 ### Instale as dependências:
