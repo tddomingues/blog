@@ -44,17 +44,18 @@ const LoginForm = () => {
     await signIn("credentials", {
       ...data,
       redirect: false,
-    }).then((callback) => {
-      if (callback?.error === "CredentialsSignin") {
-        toast({
-          variant: "destructive",
-          title: "Ocorreu um erro",
-          description: "E-mail ou senha incorretos",
-        });
-      } else {
-        router.push("/");
-      }
     });
+    // .then((callback) => {
+    //   if (callback?.error === "CredentialsSignin") {
+    //     toast({
+    //       variant: "destructive",
+    //       title: "Ocorreu um erro",
+    //       description: "E-mail ou senha incorretos",
+    //     });
+    //   } else {
+    //     router.push("/");
+    //   }
+    // });
   };
   return (
     <>

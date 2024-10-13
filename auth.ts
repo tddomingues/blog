@@ -5,6 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import db from "./src/lib/db";
 import bcrypt from "bcryptjs";
+import axios from "axios";
 
 export const {
   signIn,
@@ -13,7 +14,6 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   debug: true,
-  adapter: PrismaAdapter(db) as Adapter,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -30,34 +30,31 @@ export const {
           return null;
         }
 
-        const user = await db.user.findFirst({
-          where: {
-            email: credentials.email,
-          },
+        console.log(credentials.email);
+
+        const infoReq = await axios.post("http://localhost:4000/auth/login", {
+          email: credentials.email,
+          password: credentials.password,
         });
 
-        if (!user) return null;
+        console.log("infoReq", infoReq);
 
-        const passwordMatch = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (passwordMatch) {
-          return user;
-        }
-
+        // if (sendData.status === 201) {
+        //   return {
+        //     email: credentials.email,
+        //   };
+        // }
         return null;
       },
     }),
   ],
-  callbacks: {
-    async session({ session, user }) {
-      session.user = { ...session.user, id: user.id };
+  // callbacks: {
+  //   async session({ session, user }) {
+  //     session.user = { ...session.user, id: user.id };
 
-      return session;
-    },
-  },
+  //     return session;
+  //   },
+  // },
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",
