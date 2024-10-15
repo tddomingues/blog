@@ -49,19 +49,9 @@ export const {
       },
     }),
   ],
-  // callbacks: {
-  //   async session({ session, user }) {
-  //     session.user = { ...session.user, id: user.id };
-
-  //     return session;
-  //   },
-  // },
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",
     signOut: "/auth/logout",
-    error: "/auth/error",
-    verifyRequest: "/auth/verify",
-    newUser: "/auth/new-user",
   },
 });

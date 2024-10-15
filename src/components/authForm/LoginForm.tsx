@@ -54,7 +54,7 @@ const LoginForm = () => {
         description: "E-mail ou senha incorretos",
       });
     } else {
-      router.push("/");
+      router.refresh();
     }
   };
   return (
