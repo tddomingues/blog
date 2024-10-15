@@ -29,6 +29,7 @@ const NewestPost = async ({ post }: NewestPostProps) => {
             alt={post.title}
             src={post.image}
             fill
+            priority
             className="object-cover rounded-b-xl"
           />
         </div>

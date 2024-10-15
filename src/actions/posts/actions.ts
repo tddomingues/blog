@@ -37,7 +37,7 @@ export async function likePost(data: LikePostProps) {
     if (!likePost) {
       revalidatePath(`/post/${data.id_post}`);
 
-      return await db.post.update({
+      await db.post.update({
         where: {
           id: data.id_post,
         },
@@ -49,6 +49,8 @@ export async function likePost(data: LikePostProps) {
           },
         },
       });
+
+      return;
     }
 
     revalidatePath(`/post/${data.id_post}`);
@@ -59,6 +61,8 @@ export async function likePost(data: LikePostProps) {
         fk_user_id: data.id_user,
       },
     });
+
+    return;
   } catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientValidationError) {
       throw new Error(error.message);

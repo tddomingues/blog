@@ -28,7 +28,7 @@ interface PostByIdProps {
 
 const PostById = ({ post, user }: PostByIdProps) => {
   return (
-    <div className="container flex gap-4 flex-col mt-4">
+    <div className="flex gap-4 flex-col mt-4">
       <div className="flex justify-between">
         <Link href="/">
           <ArrowLeft className="hover:text-primary/80 duration-200" />

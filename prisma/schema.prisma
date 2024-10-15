@@ -18,6 +18,7 @@ model User {
   create_at     DateTime  @default(now())
   Post          Post[]
   likes         Like[]
+  messages      Message[]
   accounts      Account[]
   sessions      Session[]
 }
@@ -50,19 +51,35 @@ model Session {
 }
 
 model Post {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String
   likes       Like[]
+  message     Message[]
   image       String
   category    String
-  create_at   DateTime @default(now())
+  create_at   DateTime  @default(now())
   fk_user_id  String
-  user        User     @relation(fields: [fk_user_id], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [fk_user_id], references: [id], onDelete: Cascade)
 }
 
 model Like {
   id        String   @id @default(uuid())
+  create_at DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fk_user_id String
+  user       User   @relation(fields: [fk_user_id], references: [id], onDelete: Cascade)
+
+  fk_post_id String
+  post       Post   @relation(fields: [fk_post_id], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  content String
+
   create_at DateTime @default(now())
   updatedAt DateTime @updatedAt
 

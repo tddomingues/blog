@@ -93,8 +93,13 @@ const LoginForm = () => {
             callbackUrl: "/",
           })
         }
+        disabled={isSubmitting}
       >
-        <FcGoogle size={20} />
+        {isSubmitting ? (
+          <LoaderCircle className="animate-spin" size={20} />
+        ) : (
+          <FcGoogle size={20} />
+        )}
       </Button>
     </>
   );
