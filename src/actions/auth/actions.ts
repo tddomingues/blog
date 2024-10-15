@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/src/lib/db";
+import { Prisma } from "@prisma/client";
 
 import bcrypt from "bcryptjs";
 
@@ -42,8 +43,11 @@ export async function login(data: LoginProps) {
     };
 
     return filterUser;
-  } catch (error) {
-    return { error: "Erro no servidor." };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
 }
 
@@ -76,7 +80,10 @@ export async function authRegister(data: Register) {
     });
 
     return { message: "Registro feito com sucesso!" };
-  } catch (error) {
-    return { error: "Erro no servidor." };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
 }
