@@ -1,5 +1,5 @@
 //actions
-import { currentUser } from "@/src/actions/getCurrentUser";
+import { currentUser } from "@/src/actions/user/getCurrentUser";
 
 //components
 import FormPost from "@/src/components/FormPost";

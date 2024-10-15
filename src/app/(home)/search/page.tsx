@@ -1,27 +1,23 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
-
 //components
 import ListPostsSearch from "@/src/components/ListPostsSearch";
+import { getSeachPost } from "@/src/actions/posts/actions";
 
-//hooks
-import useGetPostsSearch from "@/src/hooks/useGetPostsSearch";
-
-const Search = () => {
-  const params = useSearchParams();
-
-  const q = params.get("q") || "";
-
-  const { posts } = useGetPostsSearch(q);
+const Search = async ({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { q: string | undefined };
+}) => {
+  const posts = await getSeachPost(searchParams?.q || "");
 
   return (
     <div>
-      {posts && (
-        <div className="mt-4 container">
-          <ListPostsSearch posts={posts} />
-        </div>
-      )}
+      <div className="mt-4 container">
+        {posts && (
+          <ListPostsSearch posts={posts} query={searchParams?.q || ""} />
+        )}
+      </div>
     </div>
   );
 };

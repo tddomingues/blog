@@ -7,7 +7,7 @@ export default interface PostProps {
   description: string;
   image: string;
   likes: LikeProps[];
-  user: UserProps;
+  user: Pick<UserProps, "id" | "name" | "image" | "role">;
   category: string;
   create_at: Date;
   fk_user_id: string;

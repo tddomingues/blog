@@ -1,7 +1,9 @@
 "use client";
 
-import axios from "axios";
 import { useRouter } from "next/navigation";
+
+//actions
+import { createPost, editPost } from "@/src/actions/posts/actions";
 
 //components
 import {
@@ -24,11 +26,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "../hooks/use-toast";
 import { z } from "zod";
 
-//actions
-import action from "../actions/actions";
-
 //types
 import UserProps from "../types/user";
+import PostProps from "../types/post";
 
 const schema = z.object({
   title: z.string().min(5),
@@ -40,13 +40,11 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 interface FormPostProps {
-  user: UserProps | null;
-  defaultValuesForm: {
-    title: string;
-    description: string;
-    image: string;
-    category: string;
-  };
+  user: Pick<UserProps, "id" | "image" | "email" | "role" | "name">;
+  defaultValuesForm: Pick<
+    PostProps,
+    "title" | "description" | "image" | "category"
+  >;
   typePost: "create" | "edit";
   id_post?: string;
 }
@@ -71,40 +69,55 @@ const FormPost = ({
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    const newData = {
-      ...data,
-      fk_user_id: user!.id,
-    };
-
     try {
       if (typePost === "create") {
-        const res = await axios.post(
-          "http://localhost:3000/api/post/create-post",
-          newData
-        );
-        toast({
-          variant: "default",
-          description: res.data.message,
-        });
+        const newData = {
+          ...data,
+          fk_user_id: user.id,
+        };
 
-        await action({ typePost: "create/delete" });
-        router.replace("/");
+        const res = await createPost(newData);
+
+        if (res.status) {
+          toast({
+            variant: "default",
+            description: "Postagem criada com sucesso",
+          });
+
+          router.replace("/");
+        }
+
+        if (res.error) {
+          toast({
+            variant: "destructive",
+            description: res.error,
+          });
+        }
       }
 
-      if (typePost === "edit") {
-        const res = await axios.put(
-          `http://localhost:3000/api/post/edit-post/${id_post}`,
-          newData
-        );
+      if (typePost === "edit" && id_post) {
+        const newData = {
+          ...data,
+          id: id_post,
+        };
 
-        toast({
-          variant: "default",
-          description: res.data.message,
-        });
+        const res = await editPost(newData);
 
-        await action({ typePost: "edit", id_post });
+        if (res.status) {
+          toast({
+            variant: "default",
+            description: "Postagem editada com sucesso",
+          });
 
-        router.replace(`/post/${id_post}`);
+          router.replace(`/post/${id_post}`);
+        }
+
+        if (res.error) {
+          toast({
+            variant: "default",
+            description: res.error,
+          });
+        }
       }
     } catch (err) {
       console.error(err);
@@ -117,21 +130,17 @@ const FormPost = ({
         <div className="">
           <Label className="mr-4 w-full">Título</Label>
           <Input className="l" {...register("title")} />
-          {errors.title && <Error message="Título obrigatório" className="" />}
+          {errors.title && <Error message="Título obrigatório" />}
         </div>
         <div className="">
           <Label className="text-right mr-4">Conteúdo</Label>
           <Textarea className=" max-h-[200px]" {...register("description")} />
-          {errors.description && (
-            <Error message="Conteúdo obrigatório" className="" />
-          )}
+          {errors.description && <Error message="Conteúdo obrigatório" />}
         </div>
         <div className="">
           <Label className="text-right mr-4">Link da imagem</Label>
           <Input className="" {...register("image")} />
-          {errors.image && (
-            <Error message="Link da imagem obrigatório" className="" />
-          )}
+          {errors.image && <Error message="Link da imagem obrigatório" />}
         </div>
         <div className="">
           <Label className="text-right mr-4">Categorias</Label>
@@ -151,9 +160,7 @@ const FormPost = ({
               </SelectGroup>
             </SelectContent>
           </Select>
-          {errors.category && (
-            <Error message="Insira uma categoria" className="" />
-          )}
+          {errors.category && <Error message="Insira uma categoria" />}
         </div>
       </div>
 

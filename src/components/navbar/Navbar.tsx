@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 //actions
-import { currentUser } from "@/src/actions/getCurrentUser";
+import { currentUser } from "@/src/actions/user/getCurrentUser";
 
 //components
 import AuthBtns from "./AuthBtns";

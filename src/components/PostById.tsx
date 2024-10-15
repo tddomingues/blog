@@ -8,25 +8,11 @@ import { ptBR } from "date-fns/locale";
 
 //components
 import { Badge } from "@/src/components/ui/badge";
-import DeletePost from "./DeletePost";
 import Like from "./Like";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
+import BtnDelete from "./BtnDelete";
 
 //icons
-import {
-  ArrowLeft,
-  BookOpen,
-  Calendar,
-  Edit2,
-  EllipsisVertical,
-} from "lucide-react";
+import { ArrowLeft, BookOpen, Calendar, Edit2 } from "lucide-react";
 
 //types
 import PostProps from "../types/post";
@@ -34,17 +20,13 @@ import UserProps from "../types/user";
 
 //libs
 import calculateReadingTime from "../utils/calculateReadingTime";
-import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
 
 interface PostByIdProps {
   post: PostProps;
-  user: UserProps | null;
+  user: Pick<UserProps, "id" | "image" | "email" | "role" | "name"> | null;
 }
 
 const PostById = ({ post, user }: PostByIdProps) => {
-  const router = useRouter();
-
   return (
     <div className="container flex gap-4 flex-col mt-4">
       <div className="flex justify-between">
@@ -52,26 +34,17 @@ const PostById = ({ post, user }: PostByIdProps) => {
           <ArrowLeft className="hover:text-primary/80 duration-200" />
         </Link>
         {user?.role === "admin" && (
-          <div>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <EllipsisVertical className="hover:text-primary/80 duration-200" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="mr-1">
-                <DropdownMenuItem>
-                  <Link
-                    href={`edit/${post.id}`}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <Edit2 size={16} />
-                    <span className="text-sm">Editar</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <DeletePost id_post={post.id} />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+          <div className="flex gap-2 items-center">
+            <Link
+              href={`edit/${post.id}`}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <Edit2
+                size={16}
+                className="text-primary hover:text-primary/80 duration-200"
+              />
+            </Link>
+            <BtnDelete id_post={post.id} />
           </div>
         )}
       </div>
@@ -123,9 +96,7 @@ const PostById = ({ post, user }: PostByIdProps) => {
         <p className="mt-2 text-primary/80">{post.description}</p>
       </div>
       <span className="flex items-center">
-        {user && (
-          <Like id_post={post.id} id_user={user?.id || ""} post={post} />
-        )}
+        {user && <Like id_post={post.id} id_user={user.id || ""} post={post} />}
       </span>
     </div>
   );

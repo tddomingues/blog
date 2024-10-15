@@ -1,7 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import axios from "axios";
+//actions
+import { authRegister } from "@/src/actions/auth/actions";
 
 //icons
 import { LoaderCircle } from "lucide-react";
@@ -49,21 +50,23 @@ const RegisterForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    axios
-      .post("/api/auth/register", data)
-      .then(() => {
-        router.push("/auth/login");
-      })
-      .catch((err) => {
-        toast({
-          variant: "destructive",
-          title: "Ocorreu um erro",
-          description: err.response.data.error,
-        });
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    const res = await authRegister(data);
 
-        return err;
+    if (res.error) {
+      toast({
+        variant: "destructive",
+        title: res.error,
       });
+      return;
+    }
+
+    toast({
+      variant: "default",
+      title: "Seja bem-vindo!",
+    });
+
+    router.push("/auth/login");
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

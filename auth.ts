@@ -1,11 +1,13 @@
 import NextAuth from "next-auth";
-import Adapter from "next-auth/adapters";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+
+//lib
 import db from "./src/lib/db";
-import bcrypt from "bcryptjs";
-import axios from "axios";
+
+//actions
+import { login } from "./src/actions/auth/actions";
 
 export const {
   signIn,
@@ -14,6 +16,8 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   debug: true,
+  adapter: PrismaAdapter(db),
+  session: { strategy: "jwt" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -30,21 +34,18 @@ export const {
           return null;
         }
 
-        console.log(credentials.email);
-
-        const infoReq = await axios.post("http://localhost:4000/auth/login", {
+        const data = {
           email: credentials.email,
           password: credentials.password,
-        });
+        };
 
-        console.log("infoReq", infoReq);
+        const res = await login(data);
 
-        // if (sendData.status === 201) {
-        //   return {
-        //     email: credentials.email,
-        //   };
-        // }
-        return null;
+        if ("error" in res) {
+          return null;
+        }
+
+        return res;
       },
     }),
   ],

@@ -23,20 +23,4 @@ const Error = forwardRef<HTMLDivElement, MessageProps>(
 );
 Error.displayName = "Error";
 
-// const Error = ({ className, ...props }) => {
-//   return (
-//     <span
-//       className={cn(
-//         "mt-1 text-xs font-medium text-destructive flex items-center gap-1",
-//         className
-//       )}
-//     >
-//       <CircleAlert size={12} />
-//       {message}
-//     </span>
-//   );
-// };
-
-// export default Error;
-
 export { Error };

@@ -1,6 +1,6 @@
 //actions
-import { currentUser } from "@/src/actions/getCurrentUser";
-import { getPosts } from "@/src/actions/getAllPosts";
+import { currentUser } from "@/src/actions/user/getCurrentUser";
+import { getPostById } from "@/src/actions/posts/actions";
 
 //components
 import { NoPost } from "@/src/components/NoPost";
@@ -14,10 +14,9 @@ interface PostProps {
 
 const Post = async (props: PostProps) => {
   const { params } = props;
-  const user = await currentUser();
-  const posts = await getPosts();
 
-  const post = await posts.find((post) => post.id === params.id);
+  const user = await currentUser();
+  const post = await getPostById(params.id);
 
   return <>{post ? <PostById post={post} user={user} /> : <NoPost />}</>;
 };

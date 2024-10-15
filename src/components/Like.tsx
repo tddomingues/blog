@@ -7,7 +7,7 @@ import { Button } from "@/src/components/ui/button";
 import { ThumbsUp } from "lucide-react";
 
 //actions
-import likePost from "../actions/likePost";
+import { likePost } from "@/src/actions/posts/actions";
 
 //lib
 import { cn } from "../lib/utils";

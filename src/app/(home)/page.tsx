@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 //actions
-import { currentUser } from "@/src/actions/getCurrentUser";
+import { currentUser } from "@/src/actions/user/getCurrentUser";
 
 //components
 import ListAllPosts from "@/src/components/ListAllPosts";
-import { getPosts } from "@/src/actions/getAllPosts";
+import { getPosts } from "@/src/actions/posts/actions";
 import NewestPost from "@/src/components/NewestPost";
 import { NoPost } from "@/src/components/NoPost";
 import ListMostLikedPosts from "@/src/components/ListMostLikedPosts";

@@ -1,6 +1,6 @@
 //actions
-import { getPosts } from "@/src/actions/getAllPosts";
-import { currentUser } from "@/src/actions/getCurrentUser";
+import { getPostById, getPosts } from "@/src/actions/posts/actions";
+import { currentUser } from "@/src/actions/user/getCurrentUser";
 
 //components
 import FormPost from "@/src/components/FormPost";
@@ -14,10 +14,8 @@ interface EditPostProps {
 }
 
 const EditPost = async ({ params }: EditPostProps) => {
-  const posts = await getPosts();
   const user = await currentUser();
-
-  const post = posts && posts.find((post) => post.id === params.id);
+  const post = await getPostById(params.id);
 
   if (!post) return <NoPost />;
 

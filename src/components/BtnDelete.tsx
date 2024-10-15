@@ -1,7 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import axios from "axios";
+//actions
+import { deletePost } from "@/src/actions/posts/actions";
 
 //components
 import {
@@ -18,16 +19,11 @@ import {
 //icons
 import { Trash2 } from "lucide-react";
 
-//actions
-import action from "../actions/actions";
-
 const BtnDelete = ({ id_post }: { id_post: string }) => {
   const router = useRouter();
 
   const handleDelete = async (id_post: string) => {
-    await axios.delete(`/api/post/delete-post/${id_post}`);
-
-    await action({ typePost: "create/delete" });
+    await deletePost(id_post);
 
     router.replace("/");
   };
@@ -35,8 +31,10 @@ const BtnDelete = ({ id_post }: { id_post: string }) => {
     <AlertDialog>
       <AlertDialogTrigger>
         <div className="flex items-center gap-2 cursor-pointer px-2 py-1.5">
-          <Trash2 size={16} />
-          <span className="text-sm">Excluir</span>
+          <Trash2
+            size={16}
+            className="text-destructive hover:text-destructive/80 duration-200"
+          />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>

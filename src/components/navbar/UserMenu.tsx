@@ -13,14 +13,18 @@ import {
 //types
 import UserProps from "@/src/types/user";
 
-const UserMenu = ({ user }: { user: UserProps }) => {
+interface UserMenuProps {
+  user: Pick<UserProps, "id" | "email" | "name" | "role" | "image">;
+}
+
+const UserMenu = ({ user }: UserMenuProps) => {
   return (
     <div className="flex items-center gap-1">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="bg-chart-2 grid place-items-center rounded-full h-8 w-8 cursor-pointer">
             <span className="font-medium text-primary-foreground text-lg">
-              {user.name![0]}
+              {user.name[0]}
             </span>
           </div>
         </DropdownMenuTrigger>
@@ -30,7 +34,7 @@ const UserMenu = ({ user }: { user: UserProps }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <span className="font-medium text-sm">{user.name?.split(" ")[0]}</span>
+      <span className="font-medium text-sm">{user.name.split(" ")[0]}</span>
     </div>
   );
 };

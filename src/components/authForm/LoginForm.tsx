@@ -1,4 +1,5 @@
 "use client";
+
 import { signIn } from "next-auth/react";
 
 //components
@@ -41,21 +42,20 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       ...data,
       redirect: false,
     });
-    // .then((callback) => {
-    //   if (callback?.error === "CredentialsSignin") {
-    //     toast({
-    //       variant: "destructive",
-    //       title: "Ocorreu um erro",
-    //       description: "E-mail ou senha incorretos",
-    //     });
-    //   } else {
-    //     router.push("/");
-    //   }
-    // });
+
+    if (res?.error === "CredentialsSignin") {
+      toast({
+        variant: "destructive",
+        title: "Ocorreu um erro",
+        description: "E-mail ou senha incorretos",
+      });
+    } else {
+      router.push("/");
+    }
   };
   return (
     <>
