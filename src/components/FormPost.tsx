@@ -78,6 +78,8 @@ const FormPost = ({
 
         const res = await createPost(newData);
 
+        console.log("FORÇANDO ERRO", res);
+
         if (res.status) {
           toast({
             variant: "default",

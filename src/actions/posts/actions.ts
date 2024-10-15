@@ -3,67 +3,68 @@
 import db from "@/src/lib/db";
 import { revalidatePath } from "next/cache";
 import { currentUser } from "../user/getCurrentUser";
+import { Prisma } from "@prisma/client";
+import PostProps from "@/src/types/post";
 
 interface LikePostProps {
   id_post: string;
   id_user: string;
 }
 
-interface PostProps {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  category: string;
-}
-
 export async function likePost(data: LikePostProps) {
-  if (!data) {
-    return null;
-  }
+  try {
+    if (!data) {
+      return null;
+    }
 
-  const post = await db.post.findFirst({
-    where: {
-      id: data.id_post,
-    },
-  });
-
-  if (!post) {
-    return null;
-  }
-
-  const likePost = await db.like.findFirst({
-    where: {
-      fk_post_id: data.id_post,
-      fk_user_id: data.id_user,
-    },
-  });
-
-  if (!likePost) {
-    revalidatePath(`/post/${data.id_post}`);
-
-    return await db.post.update({
+    const post = await db.post.findFirst({
       where: {
         id: data.id_post,
       },
-      data: {
-        likes: {
-          create: {
-            fk_user_id: data.id_user,
-          },
-        },
+    });
+
+    if (!post) {
+      return null;
+    }
+
+    const likePost = await db.like.findFirst({
+      where: {
+        fk_post_id: data.id_post,
+        fk_user_id: data.id_user,
       },
     });
+
+    if (!likePost) {
+      revalidatePath(`/post/${data.id_post}`);
+
+      return await db.post.update({
+        where: {
+          id: data.id_post,
+        },
+        data: {
+          likes: {
+            create: {
+              fk_user_id: data.id_user,
+            },
+          },
+        },
+      });
+    }
+
+    revalidatePath(`/post/${data.id_post}`);
+
+    await db.like.deleteMany({
+      where: {
+        fk_post_id: data.id_post,
+        fk_user_id: data.id_user,
+      },
+    });
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
-
-  revalidatePath(`/post/${data.id_post}`);
-
-  return await db.like.deleteMany({
-    where: {
-      fk_post_id: data.id_post,
-      fk_user_id: data.id_user,
-    },
-  });
 }
 
 export const getPosts = async () => {
@@ -86,8 +87,11 @@ export const getPosts = async () => {
       },
     });
     return posts;
-  } catch (error) {
-    return [];
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientInitializationError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
 };
 
@@ -111,8 +115,14 @@ export const getPostById = async (id: string) => {
     });
 
     return post;
-  } catch (error) {
-    return console.log(error);
+  } catch (error: unknown) {
+    if (
+      error instanceof Prisma.PrismaClientValidationError ||
+      error instanceof Prisma.PrismaClientInitializationError
+    ) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
 };
 
@@ -132,8 +142,11 @@ export const getSeachPost = async (search: string) => {
     });
 
     return post;
-  } catch (error) {
-    return [];
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientInitializationError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
 };
 
@@ -163,92 +176,111 @@ export const createPost = async (data: any) => {
     });
 
     return { status: true };
-  } catch (error) {
-    return { error: "Erro ao criar a postagem" };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
 };
 
 export const deletePost = async (id: string) => {
-  const user = await currentUser();
+  try {
+    const user = await currentUser();
 
-  if (!user) {
-    return { error: "Usuário não encontrado" };
+    if (!user) {
+      return { error: "Usuário não encontrado" };
+    }
+
+    if (user.role === "user") {
+      return { error: "Usuário não autorizado" };
+    }
+
+    await db.post.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath("/");
+
+    return { message: "Post deletado com sucesso!" };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
-
-  if (user.role === "user") {
-    return { error: "Usuário não autorizado" };
-  }
-
-  await db.post.delete({
-    where: {
-      id,
-    },
-  });
-
-  revalidatePath(`/`);
-
-  return { message: "Post deletado com sucesso!" };
 };
 
-export const editPost = async (data: PostProps) => {
-  const user = await currentUser();
+export const editPost = async (
+  data: Pick<PostProps, "title" | "description" | "image" | "category" | "id">
+) => {
+  try {
+    const user = await currentUser();
 
-  if (!user) {
-    return { error: "Usuário não encontrado" };
+    if (!user) {
+      return { error: "Usuário não encontrado" };
+    }
+
+    if (user.role !== "admin") {
+      return { error: "Você não tem permissão para editar um post" };
+    }
+
+    const post = await db.post.findFirst({
+      where: {
+        id: data.id,
+      },
+    });
+
+    if (!post) {
+      return { error: "Postagem não encontrada" };
+    }
+
+    const { id, title, description, category, image } = data;
+
+    let info = {};
+
+    if (title) {
+      info = {
+        ...info,
+        title,
+      };
+    }
+
+    if (description) {
+      info = {
+        ...info,
+        description,
+      };
+    }
+
+    if (category) {
+      info = {
+        ...info,
+        category,
+      };
+    }
+
+    if (image) {
+      info = {
+        ...info,
+        image,
+      };
+    }
+
+    await db.post.update({
+      where: {
+        id,
+      },
+      data: info,
+    });
+
+    return { status: true };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      throw new Error(error.message);
+    }
+    throw error;
   }
-
-  if (user.role !== "admin") {
-    return { error: "Você não tem permissão para editar um post" };
-  }
-
-  const post = await db.post.findFirst({
-    where: {
-      id: data.id,
-    },
-  });
-
-  if (!post) {
-    return { error: "Postagem não encontrada" };
-  }
-
-  const { id, title, description, category, image } = data;
-
-  let info = {};
-
-  if (title) {
-    info = {
-      ...info,
-      title,
-    };
-  }
-
-  if (description) {
-    info = {
-      ...info,
-      description,
-    };
-  }
-
-  if (category) {
-    info = {
-      ...info,
-      category,
-    };
-  }
-
-  if (image) {
-    info = {
-      ...info,
-      image,
-    };
-  }
-
-  await db.post.update({
-    where: {
-      id,
-    },
-    data: info,
-  });
-
-  return { status: true };
 };
