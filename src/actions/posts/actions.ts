@@ -11,6 +11,12 @@ interface LikePostProps {
   id_user: string;
 }
 
+interface CreateMessageProps {
+  id_post: string;
+  id_user: string;
+  content: string;
+}
+
 export async function likePost(data: LikePostProps) {
   try {
     if (!data) {
@@ -107,6 +113,21 @@ export const getPostById = async (id: string) => {
       },
       include: {
         likes: true,
+        messages: {
+          include: {
+            user: {
+              select: {
+                name: true,
+                id: true,
+                role: true,
+                image: true,
+              },
+            },
+          },
+          orderBy: {
+            create_at: "desc",
+          },
+        },
         user: {
           select: {
             name: true,
@@ -281,6 +302,43 @@ export const editPost = async (
     });
 
     return { status: true };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      throw new Error(error.message);
+    }
+    throw error;
+  }
+};
+
+export const createMessage = async ({
+  content,
+  id_post,
+  id_user,
+}: CreateMessageProps) => {
+  try {
+    const post = await db.post.findUnique({
+      where: {
+        id: id_post,
+      },
+    });
+
+    if (!post) return { error: "Postagem não encontrada." };
+
+    await db.post.update({
+      where: {
+        id: id_post,
+      },
+      data: {
+        messages: {
+          create: {
+            content,
+            fk_user_id: id_user,
+          },
+        },
+      },
+    });
+
+    revalidatePath(`/post/${id_post}`);
   } catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientValidationError) {
       throw new Error(error.message);

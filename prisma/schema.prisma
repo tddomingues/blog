@@ -55,7 +55,7 @@ model Post {
   title       String
   description String
   likes       Like[]
-  message     Message[]
+  messages    Message[]
   image       String
   category    String
   create_at   DateTime  @default(now())
