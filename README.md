@@ -13,10 +13,10 @@ Este é um blog simples focado na área de tecnologias. Ele permite a criação,
 ## FUNCIONALIDADES
 
 - Admin: Pode criar, editar, deletar e visualizar postagens.
-- Usuário: Pode visualizar postagens e interagir com elas curtindo.
-- Interação com postagens: Usuários podem curtir postagens.
+- Usuário: Pode visualizar postagens e interagir com elas curtindo e comentando.
+- Interação com postagens: Usuários podem curtir e comentar nas postagens.
 - Sistema de busca: Os usuários podem buscar postagens pelo título ou conteúdo.
-- Cadastro e Login: Utiliza autenticação com o Next-Auth para realizar login e registro de usuários.
+- Cadastro e Login: Utiliza autenticação com o Next-Auth para realizar login e registro de usuários. Além de logar com o Google.
 - Middleware: Protege rotas específicas para impedir acesso não autorizado com base nos tokens de usuário (JWT).
 
 ## TECNOLOGIAS/LIBS
