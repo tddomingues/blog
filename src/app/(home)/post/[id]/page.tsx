@@ -5,13 +5,6 @@ import { getPostById } from "@/src/actions/posts/actions";
 //components
 import { NoPost } from "@/src/components/NoPost";
 import PostById from "@/src/components/PostById";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale/pt-BR";
-import { Badge } from "@/src/components/ui/badge";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { Button } from "@/src/components/ui/button";
-import { SendHorizontal } from "lucide-react";
 import FormMessage from "@/src/components/FormMessage";
 import ListMessages from "@/src/components/ListMessages";
 
@@ -39,7 +32,7 @@ const Post = async (props: PostProps) => {
                 <FormMessage id_post={params.id} id_user={user?.id} />
               </div>
             )}
-            <ListMessages messages={post.messages} />
+            <ListMessages messages={post.messages} user={user} />
           </div>
         </div>
       ) : (

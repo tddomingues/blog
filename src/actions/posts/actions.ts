@@ -346,3 +346,42 @@ export const createMessage = async ({
     throw error;
   }
 };
+
+export const deleteComment = async (id: string) => {
+  try {
+    const user = await currentUser();
+
+    if (!user) {
+      return { error: "Usuário não encontrado" };
+    }
+
+    const comment = await db.message.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!comment) {
+      return { error: "Comentário não encontrado" };
+    }
+
+    if (comment.fk_user_id !== user.id) {
+      return { error: "Usuário não autorizado" };
+    }
+
+    await db.message.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath(`/post/${comment.fk_post_id}`);
+
+    return { message: "Post deletado com sucesso!" };
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      throw new Error(error.message);
+    }
+    throw error;
+  }
+};
