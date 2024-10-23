@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
+import { Image as IconImage } from "lucide-react";
+
 //actions
 import { createPost, editPost } from "@/src/actions/posts/actions";
 
@@ -29,6 +31,8 @@ import { z } from "zod";
 //types
 import UserProps from "../types/user";
 import PostProps from "../types/post";
+import Image from "next/image";
+import { Card } from "./ui/card";
 
 const schema = z.object({
   title: z.string().min(5),
@@ -62,11 +66,15 @@ const FormPost = ({
     handleSubmit,
     register,
     setValue,
+    getValues,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: defaultValuesForm,
     resolver: zodResolver(schema),
   });
+
+  const image = watch("image");
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
@@ -126,6 +134,19 @@ const FormPost = ({
     }
   };
 
+  function isURL(str: string) {
+    var pattern = new RegExp(
+      "^(https?:\\/\\/)" +
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" +
+        "((\\d{1,3}\\.){3}\\d{1,3}))" +
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+        "(\\?[;&a-z\\d%_.~+=-]*)?" +
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    );
+    return pattern.test(str);
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div className="flex flex-col gap-4">
@@ -134,17 +155,33 @@ const FormPost = ({
           <Input className="l" {...register("title")} />
           {errors.title && <Error message="Título obrigatório" />}
         </div>
-        <div className="">
+        <div>
           <Label className="text-right mr-4">Conteúdo</Label>
           <Textarea className=" max-h-[200px]" {...register("description")} />
           {errors.description && <Error message="Conteúdo obrigatório" />}
         </div>
-        <div className="">
+
+        <div>
+          <Card className="relative mb-2 w-[200px] h-[200px] flex justify-center items-center">
+            {image && (
+              <Image
+                alt="Pré-visualização da imagem de fundo da postagem." //https://i
+                src={isURL(image) ? new URL(image).href : ""}
+                fill
+                className="object-cover rounded-lg"
+              />
+            )}
+            <IconImage
+              className="text-primary/20"
+              size={25}
+              strokeWidth={1.5}
+            />
+          </Card>
           <Label className="text-right mr-4">Link da imagem</Label>
           <Input className="" {...register("image")} />
           {errors.image && <Error message="Link da imagem obrigatório" />}
         </div>
-        <div className="">
+        <div>
           <Label className="text-right mr-4">Categorias</Label>
           <Select
             onValueChange={(value) => setValue("category", value)}
