@@ -15,7 +15,6 @@ import { Calendar, UserRound } from "lucide-react";
 
 //types
 import PostProps from "../types/post";
-import { useState } from "react";
 import PaginationControls from "./PaginationControls";
 import { useSearchParams } from "next/navigation";
 
@@ -26,10 +25,10 @@ interface ListAllPostsProps {
 const ListAllPosts = ({ posts }: ListAllPostsProps) => {
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
-  const perPage = searchParams.get("per_page") ?? "1";
+  const perPage = searchParams.get("per_page") ?? "6";
 
-  const currentIndex = (Number(page) - 1) * Number(perPage); // 0, 5, 10 ...
-  const endIndex = currentIndex + Number(perPage); // 5, 10, 15 ...
+  const currentIndex = (Number(page) - 1) * Number(perPage);
+  const endIndex = currentIndex + Number(perPage);
 
   const numberOfPages = Math.ceil(posts.length / +perPage);
 
@@ -42,7 +41,10 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
       </div>
       <div className="grid gap-2 grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
         {_posts.map((post, index) => (
-          <Card key={index} className="flex flex-col max-w-[481px] gap-2">
+          <Card
+            key={index}
+            className="flex flex-col max-w-full md:max-w-[481px] gap-2"
+          >
             <div className="relative h-[200px] w-full">
               <Image
                 alt={post.title}

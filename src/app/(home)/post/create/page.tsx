@@ -18,14 +18,14 @@ const CreatePost = async () => {
   return (
     <div className="container">
       {user?.role === "admin" ? (
-        <Card className="p-4 mt-8 ">
+        <div className="mt-8 ">
           <h1 className="mb-4 text-2xl font-bold">Criar Postagem</h1>
           <FormPost
             user={user}
             defaultValuesForm={defaultValuesForm}
             typePost="create"
           />
-        </Card>
+        </div>
       ) : (
         <h2 className="text-2xl font-bold text-center mt-4">Sem autorização</h2>
       )}

@@ -29,7 +29,7 @@ const EditPost = async ({ params }: EditPostProps) => {
   return (
     <div className="container">
       {user?.role === "admin" ? (
-        <Card className="p-4 mt-8 ">
+        <div className="mt-8 ">
           <h2 className="mb-4 text-2xl font-bold">Editar Postagem</h2>
           <FormPost
             defaultValuesForm={defaultValuesForm}
@@ -37,7 +37,7 @@ const EditPost = async ({ params }: EditPostProps) => {
             id_post={params.id}
             typePost="edit"
           />
-        </Card>
+        </div>
       ) : (
         <h2 className="text-3xl font-extrabold text-center mt-4">
           Sem autorização

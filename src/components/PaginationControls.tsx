@@ -27,7 +27,7 @@ const PaginationControls = ({
   perPage,
 }: PaginationControlsProps) => {
   return (
-    <Pagination className="mt-4 flex justify-end">
+    <Pagination className="mt-4 flex justify-start">
       <PaginationContent>
         <PaginationItem>
           <Badge
