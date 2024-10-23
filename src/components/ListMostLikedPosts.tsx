@@ -29,7 +29,7 @@ const ListMostLikedPosts = async ({ posts }: NewestPostProps) => {
         {mostLikedPosts.map((post, index) => (
           <Link href={`/post/${post.id}`} key={index}>
             <Card className="flex justify-start w-[250px]">
-              <div className="relative min-h-[100px] w-[100px]">
+              <div className="relative h-[100px] w-[100px]">
                 <Image
                   alt={post.title}
                   src={post.image}

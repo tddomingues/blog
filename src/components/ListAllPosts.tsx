@@ -15,20 +15,34 @@ import { Calendar, UserRound } from "lucide-react";
 
 //types
 import PostProps from "../types/post";
+import { useState } from "react";
+import PaginationControls from "./PaginationControls";
+import { useSearchParams } from "next/navigation";
 
 interface ListAllPostsProps {
   posts: PostProps[];
 }
 
 const ListAllPosts = ({ posts }: ListAllPostsProps) => {
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") ?? "1";
+  const perPage = searchParams.get("per_page") ?? "1";
+
+  const currentIndex = (Number(page) - 1) * Number(perPage); // 0, 5, 10 ...
+  const endIndex = currentIndex + Number(perPage); // 5, 10, 15 ...
+
+  const numberOfPages = Math.ceil(posts.length / +perPage);
+
+  const _posts = posts.slice(currentIndex, endIndex);
+
   return (
     <div className="flex-1">
       <div className="mb-1">
         <h2 className="text-lg font-medium">Todos as Postagens</h2>
       </div>
-      <div className="grid gap-2 w-full grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-        {posts.map((post, index) => (
-          <Card key={index} className="flex flex-col gap-2">
+      <div className="grid gap-2 grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+        {_posts.map((post, index) => (
+          <Card key={index} className="flex flex-col max-w-[481px] gap-2">
             <div className="relative h-[200px] w-full">
               <Image
                 alt={post.title}
@@ -53,11 +67,15 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
                 })}
               </Badge>
             </div>
-            <div className="flex flex-col px-2 mb-4">
-              <h3 className="font-semibold text-xl line-clamp-2 mb-1">
-                {post.title}
-              </h3>
-              <p className="line-clamp-2 text-primary/80">{post.description}</p>
+            <div className="flex flex-col flex-1 justify-between px-2 mb-4">
+              <div>
+                <h3 className="font-semibold text-xl line-clamp-2 mb-1">
+                  {post.title}
+                </h3>
+                <p className="line-clamp-2 text-primary/80">
+                  {post.description}
+                </p>
+              </div>
               <Link
                 href={`/post/${post.id}`}
                 className="font-medium underline mt-4"
@@ -68,6 +86,13 @@ const ListAllPosts = ({ posts }: ListAllPostsProps) => {
           </Card>
         ))}
       </div>
+      <PaginationControls
+        hasNextPage={endIndex < posts.length}
+        hasPrevPage={currentIndex > 0}
+        numberOfPages={numberOfPages}
+        page={+page}
+        perPage={+perPage}
+      />
     </div>
   );
 };

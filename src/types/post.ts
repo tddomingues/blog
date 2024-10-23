@@ -8,7 +8,7 @@ export default interface PostProps {
   description: string;
   image: string;
   likes: LikeProps[];
-  messages: MessageProps[];
+  messages?: MessageProps[];
   user: Pick<UserProps, "id" | "name" | "image" | "role">;
   category: string;
   create_at: Date;

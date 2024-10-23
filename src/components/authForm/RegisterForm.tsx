@@ -61,11 +61,6 @@ const RegisterForm = () => {
       return;
     }
 
-    toast({
-      variant: "default",
-      title: "Seja bem-vindo!",
-    });
-
     router.push("/auth/login");
   };
   return (

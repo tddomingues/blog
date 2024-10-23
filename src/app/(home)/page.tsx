@@ -37,7 +37,7 @@ export const Page = async () => {
           {posts.length > 1 && (
             <div className="flex flex-col gap-6 lg:flex-row-reverse lg:justify-between">
               <ListMostLikedPosts posts={posts} />
-              <ListAllPosts posts={posts.slice(1, 4)} />
+              <ListAllPosts posts={posts.slice(1)} />
             </div>
           )}
         </div>
