@@ -34,6 +34,7 @@ export const currentUser = async () => {
       email: user.email,
       role: user.role,
       image: user.image,
+      emailVerified: user.emailVerified,
     };
   } catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientInitializationError) {

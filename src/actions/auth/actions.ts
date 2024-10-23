@@ -40,6 +40,7 @@ export async function login(data: LoginProps) {
       name: user.name,
       email: user.email,
       role: user.role,
+      emailVerified: user.emailVerified,
     };
 
     return filterUser;

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { currentUser, getSession } from "./actions/user/getCurrentUser";
+
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("authjs.session-token");
   const pathname = request.nextUrl.pathname;

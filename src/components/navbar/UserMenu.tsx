@@ -12,9 +12,13 @@ import {
 
 //types
 import UserProps from "@/src/types/user";
+import IconUser from "../IconUser";
 
 interface UserMenuProps {
-  user: Pick<UserProps, "id" | "email" | "name" | "role" | "image">;
+  user: Pick<
+    UserProps,
+    "id" | "email" | "name" | "role" | "image" | "emailVerified"
+  >;
 }
 
 const UserMenu = ({ user }: UserMenuProps) => {
@@ -22,10 +26,8 @@ const UserMenu = ({ user }: UserMenuProps) => {
     <div className="flex items-center gap-1">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="bg-chart-2 grid place-items-center rounded-full h-8 w-8 cursor-pointer">
-            <span className="font-medium text-primary-foreground text-lg">
-              {user.name[0]}
-            </span>
+          <div>
+            <IconUser user={user} />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">

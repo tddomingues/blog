@@ -49,6 +49,7 @@ export const {
       },
     }),
   ],
+
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",

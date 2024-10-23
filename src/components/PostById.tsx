@@ -20,6 +20,7 @@ import UserProps from "../types/user";
 
 //libs
 import calculateReadingTime from "../utils/calculateReadingTime";
+import IconUser from "./IconUser";
 
 interface PostByIdProps {
   post: PostProps;
@@ -62,12 +63,7 @@ const PostById = ({ post, user }: PostByIdProps) => {
         </div>
       </div>
       <div className="flex items-center gap-2 mt-4">
-        <div className="bg-chart-2 grid place-items-center rounded-full h-8 w-8 cursor-pointer">
-          <span className="font-medium text-primary-foreground text-lg">
-            {post.user.name![0].toUpperCase()}
-          </span>
-        </div>
-
+        <IconUser user={post.user} />
         <div className="flex flex-col">
           <span>{post!.user.name}</span>
           <span className="text-sm text-primary/80 flex gap-1">

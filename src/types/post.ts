@@ -9,7 +9,7 @@ export default interface PostProps {
   image: string;
   likes: LikeProps[];
   messages?: MessageProps[];
-  user: Pick<UserProps, "id" | "name" | "image" | "role">;
+  user: Pick<UserProps, "id" | "name" | "image" | "role" | "email">;
   category: string;
   create_at: Date;
   fk_user_id: string;
