@@ -50,6 +50,15 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
 model Post {
   id          String    @id @default(uuid())
   title       String

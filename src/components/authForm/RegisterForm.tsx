@@ -18,6 +18,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useToast } from "@/src/hooks/use-toast";
+import { useState } from "react";
 
 const schema = z
   .object({
@@ -35,7 +36,9 @@ type FormFields = z.infer<typeof schema>;
 
 const RegisterForm = () => {
   const { toast } = useToast();
-  const router = useRouter();
+  const [textSendEmail, setTextSendEmail] = useState<string | undefined>(
+    undefined
+  );
   const {
     handleSubmit,
     register,
@@ -61,7 +64,7 @@ const RegisterForm = () => {
       return;
     }
 
-    router.push("/auth/login");
+    setTextSendEmail(res.message);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -95,6 +98,11 @@ const RegisterForm = () => {
           )}
         </div>
       </div>
+      {textSendEmail && (
+        <div className="bg-green-600 text-primary-foreground p-2 text-center rounded-md">
+          <p>{textSendEmail}</p>
+        </div>
+      )}
       <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
         {isSubmitting ? (
           <LoaderCircle className="animate-spin" size={20} />

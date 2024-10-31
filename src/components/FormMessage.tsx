@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { createMessage } from "../actions/posts/actions";
+import { Textarea } from "./ui/textarea";
 
 const schema = z.object({
   content: z.string().nonempty(),
@@ -46,16 +47,18 @@ const FormMessage = ({ id_post, id_user }: FormMessageProps) => {
 
   return (
     <form className="relative" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Input
-          placeholder="Escreva seu comentário"
-          className="pr-14"
-          {...register("content")}
-        />
+      <div className="flex flex-col">
+        <div>
+          <Textarea
+            placeholder="Escreva seu comentário..."
+            className="pr-14"
+            {...register("content")}
+          />
+        </div>
+        <Button className="mt-2 self-end via-fuchsia-200" variant="secondary">
+          Enviar Comentário
+        </Button>
       </div>
-      <Button className="absolute right-0 top-0" variant="link">
-        <SendHorizontal className="text-sky-500 hover:text-sky-500/80" />
-      </Button>
     </form>
   );
 };

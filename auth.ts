@@ -49,7 +49,23 @@ export const {
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== "credentials") {
+        return true;
+      }
 
+      const existingUser = await db.user.findUnique({
+        where: {
+          id: user.id,
+        },
+      });
+
+      if (!existingUser?.emailVerified) return false;
+
+      return true;
+    },
+  },
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/auth/login",

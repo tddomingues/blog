@@ -1,9 +1,11 @@
 "use server";
 
 import db from "@/src/lib/db";
+import { sendEmail } from "@/src/lib/email";
 import { Prisma } from "@prisma/client";
 
 import bcrypt from "bcryptjs";
+import { error } from "console";
 
 interface LoginProps {
   email: string;
@@ -80,11 +82,95 @@ export async function authRegister(data: Register) {
       },
     });
 
-    return { message: "Registro feito com sucesso!" };
+    // verificar token
+
+    const token = crypto.randomUUID();
+    const expires = new Date(new Date().getTime() + 3600 * 1000);
+
+    const existingToken = await db.verificationToken.findFirst({
+      where: {
+        identifier: email,
+      },
+    });
+
+    if (existingToken) {
+      await db.verificationToken.deleteMany({
+        where: {
+          identifier: existingToken.identifier,
+        },
+      });
+    }
+
+    const verificationToken = await db.verificationToken.create({
+      data: {
+        identifier: email,
+        token,
+        expires,
+      },
+    });
+
+    await sendEmail({
+      to: verificationToken.identifier,
+      token: verificationToken.token,
+    });
+
+    return { message: "E-mail de confirmação enviado!" };
   } catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new Error(error.message);
     }
     throw error;
+  }
+}
+
+export async function newVerification(token: string) {
+  try {
+    const verificationToken = await db.verificationToken.findFirst({
+      where: {
+        token,
+      },
+    });
+
+    if (!verificationToken) {
+      return { error: "Token não existe!" };
+    }
+
+    const hasExpired = new Date(verificationToken.expires) < new Date();
+
+    if (hasExpired) {
+      return { error: "Token expirado!" };
+    }
+
+    const existingUser = await db.user.findFirst({
+      where: {
+        email: verificationToken.identifier,
+      },
+    });
+
+    if (!existingUser) {
+      return { error: "Usuário não existe!" };
+    }
+
+    await db.user.update({
+      where: {
+        id: existingUser.id,
+      },
+      data: {
+        emailVerified: new Date(),
+        email: verificationToken.identifier,
+      },
+    });
+
+    await db.verificationToken.deleteMany({
+      where: {
+        identifier: verificationToken.identifier,
+      },
+    });
+
+    return {
+      message: "E-mail confirmado!",
+    };
+  } catch (error) {
+    console.log(error);
   }
 }

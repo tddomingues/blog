@@ -18,6 +18,7 @@ import {
 
 //icons
 import { Trash2 } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface BtnDeleteProps {
   id: string; //id do post ou do comentário
@@ -41,12 +42,12 @@ const BtnDelete = ({ id, type }: BtnDeleteProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <div className="flex items-center gap-2 cursor-pointer px-2 py-1.5">
+        <Button variant="link" className="p-0">
           <Trash2
             size={16}
             className="text-destructive hover:text-destructive/80 duration-200"
           />
-        </div>
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
