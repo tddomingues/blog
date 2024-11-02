@@ -34,7 +34,7 @@ const PostById = ({ post, user }: PostByIdProps) => {
         <Link href="/">
           <ArrowLeft className="hover:text-primary/80 duration-200" />
         </Link>
-        {user?.role === "admin" && (
+        {user?.role === "ADMIN" && (
           <div className="flex gap-2 items-center">
             <Link
               href={`edit/${post.id}`}

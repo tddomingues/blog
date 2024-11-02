@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import { z } from "zod";
 
 //components
 import { useRouter } from "next/navigation";
@@ -15,9 +16,11 @@ import { FcGoogle } from "react-icons/fc";
 
 //hooks
 import { useToast } from "@/src/hooks/use-toast";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+//actions
+import { login } from "@/src/actions/auth/actions";
 
 const schema = z.object({
   email: z.string().email(),
@@ -42,19 +45,16 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    const res = await signIn("credentials", {
-      ...data,
-      redirect: false,
-    });
+    const res = await login(data);
 
-    if (res?.error === "CredentialsSignin") {
+    console.log(res);
+
+    if (res?.error) {
       toast({
         variant: "destructive",
         title: "Ocorreu um erro",
         description: "E-mail ou senha incorretos",
       });
-    } else {
-      router.refresh();
     }
   };
   return (

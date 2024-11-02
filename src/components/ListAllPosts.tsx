@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -9,14 +10,13 @@ import { ptBR } from "date-fns/locale";
 //components
 import { Card } from "./ui/card";
 import { Badge } from "@/src/components/ui/badge";
+import PaginationControls from "./PaginationControls";
 
 //icons
 import { Calendar, UserRound } from "lucide-react";
 
 //types
 import PostProps from "../types/post";
-import PaginationControls from "./PaginationControls";
-import { useSearchParams } from "next/navigation";
 
 interface ListAllPostsProps {
   posts: PostProps[];

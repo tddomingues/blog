@@ -21,7 +21,7 @@ export const Page = async () => {
   return (
     <>
       <div className="flex justify-end my-4 container">
-        {user?.role === "admin" && (
+        {user?.role === "ADMIN" && (
           <Link
             href={"/post/create"}
             className="flex items-center gap-2 transition-colors duration-200 text-primary hover:text-primary/80"

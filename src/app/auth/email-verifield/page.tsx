@@ -1,7 +1,11 @@
 "use client";
 
+//actions
 import { newVerification } from "@/src/actions/auth/actions";
+
+//components
 import { Button } from "@/src/components/ui/button";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
 const EmailVerifield = () => {

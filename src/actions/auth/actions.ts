@@ -5,7 +5,8 @@ import { sendEmail } from "@/src/lib/email";
 import { Prisma } from "@prisma/client";
 
 import bcrypt from "bcryptjs";
-import { error } from "console";
+
+import { signIn } from "@/src/auth";
 
 interface LoginProps {
   email: string;
@@ -20,39 +21,58 @@ interface Register {
 }
 
 export async function login(data: LoginProps) {
+  const user = await db.user.findFirst({
+    where: {
+      email: data.email,
+    },
+  });
+
+  if (!user) {
+    return { error: "Usuário não encontrado" };
+  }
+
+  const comparePassword = await bcrypt.compare(data.password, user.password!);
+
+  if (!comparePassword) {
+    return { error: "Senha inválida" };
+  }
+
   try {
-    const user = await db.user.findFirst({
-      where: {
-        email: data.email,
-      },
+    const res = await signIn("credentials", {
+      ...data,
     });
+    console.log("res", res);
+  } catch (error) {
+    throw error;
+  }
 
-    if (!user) {
-      return { error: "Usuário não encontrado" };
-    }
+  // if (res?.error === "CredentialsSignin") {
+  //   toast({
+  //     variant: "destructive",
+  //     title: "Ocorreu um erro",
+  //     description: "E-mail ou senha incorretos",
+  //   });
+  // }
 
-    const comparePassword = await bcrypt.compare(data.password, user.password!);
+  // const filterUser = {
+  //   id: user.id,
+  //   name: user.name,
+  //   email: user.email,
+  //   role: user.role,
+  //   emailVerified: user.emailVerified,
+  // };
 
-    if (!comparePassword) {
-      return { error: "Senha inválida" };
-    }
+  // return filterUser;
+}
 
-    const filterUser = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      emailVerified: user.emailVerified,
-    };
-
-    return filterUser;
-  } catch (error: unknown) {
+/*
+  
+  catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new Error(error.message);
     }
     throw error;
-  }
-}
+  }*/
 
 export async function authRegister(data: Register) {
   const { name, email, password, confirmPassword } = data;
@@ -108,6 +128,8 @@ export async function authRegister(data: Register) {
         expires,
       },
     });
+
+    //enviar email
 
     await sendEmail({
       to: verificationToken.identifier,
@@ -170,7 +192,7 @@ export async function newVerification(token: string) {
     return {
       message: "E-mail confirmado!",
     };
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 }

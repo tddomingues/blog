@@ -1,5 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
+
+import { useState } from "react";
 
 //actions
 import { authRegister } from "@/src/actions/auth/actions";
@@ -18,7 +19,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useToast } from "@/src/hooks/use-toast";
-import { useState } from "react";
 
 const schema = z
   .object({

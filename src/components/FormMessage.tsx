@@ -1,13 +1,17 @@
 "use client";
 
-import { SendHorizontal } from "lucide-react";
+import { z } from "zod";
+
+//components
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+
+//actions
+import { createMessage } from "../actions/posts/actions";
+
+//hooks
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { createMessage } from "../actions/posts/actions";
-import { Textarea } from "./ui/textarea";
 
 const schema = z.object({
   content: z.string().nonempty(),

@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/src/auth";
 import db from "../../lib/db";
 import { Prisma } from "@prisma/client";
 

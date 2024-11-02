@@ -183,7 +183,7 @@ export const createPost = async (data: any) => {
   try {
     if (!user) return { error: "Usuário não encontrado" };
 
-    if (user.role !== "admin")
+    if (user.role !== "ADMIN")
       return { error: "Você não tem permissão para criar um post" };
 
     // Object.keys(data).forEach((value: any) => {
@@ -219,7 +219,7 @@ export const deletePost = async (id: string) => {
       return { error: "Usuário não encontrado" };
     }
 
-    if (user.role === "user") {
+    if (user.role === "USER") {
       return { error: "Usuário não autorizado" };
     }
 
@@ -250,7 +250,7 @@ export const editPost = async (
       return { error: "Usuário não encontrado" };
     }
 
-    if (user.role !== "admin") {
+    if (user.role !== "ADMIN") {
       return { error: "Você não tem permissão para editar um post" };
     }
 
