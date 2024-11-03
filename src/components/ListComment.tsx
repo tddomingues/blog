@@ -3,7 +3,7 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 
-import MessageProps from "../types/message";
+import MessageProps from "../types/comment";
 import UserProps from "../types/user";
 import { Button } from "./ui/button";
 import { useState } from "react";
@@ -17,13 +17,13 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 
 import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
-import { deleteComment, editMessage } from "../actions/posts/actions";
+import { deleteComment, editComment } from "../actions/posts/actions";
 import AdaptiveDialog from "./AdaptiveDialog";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-interface ListMessagesProps {
+interface ListCommentProps {
   messages: MessageProps[];
   id_post: string;
   user: Pick<UserProps, "id" | "image" | "email" | "role" | "name"> | null;
@@ -35,7 +35,7 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>;
 
-const ListMessages = ({ messages, user, id_post }: ListMessagesProps) => {
+const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
   const {
     handleSubmit,
     register,
@@ -62,7 +62,7 @@ const ListMessages = ({ messages, user, id_post }: ListMessagesProps) => {
       id_post: id_post,
     };
 
-    await editMessage(newData);
+    await editComment(newData);
 
     setIsEditOpen(false);
   };
@@ -192,4 +192,4 @@ const ListMessages = ({ messages, user, id_post }: ListMessagesProps) => {
   );
 };
 
-export default ListMessages;
+export default ListComment;

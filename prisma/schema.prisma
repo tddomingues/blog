@@ -23,7 +23,7 @@ model User {
   create_at     DateTime  @default(now())
   Post          Post[]
   likes         Like[]
-  messages      Message[]
+  messages      Comment[]
   accounts      Account[]
   sessions      Session[]
 }
@@ -69,7 +69,7 @@ model Post {
   title       String
   description String
   likes       Like[]
-  messages    Message[]
+  messages    Comment[]
   image       String
   category    String
   create_at   DateTime  @default(now())
@@ -89,7 +89,7 @@ model Like {
   post       Post   @relation(fields: [fk_post_id], references: [id], onDelete: Cascade)
 }
 
-model Message {
+model Comment {
   id String @id @default(uuid())
 
   content String

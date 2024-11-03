@@ -45,7 +45,7 @@ const PostById = ({ post, user }: PostByIdProps) => {
                 className="text-primary hover:text-primary/80 duration-200"
               />
             </Link>
-            <BtnDelete id={post.id} type="post" />
+            {/* <BtnDelete id={post.id} type="post" /> */}
           </div>
         )}
       </div>

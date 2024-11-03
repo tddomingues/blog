@@ -5,8 +5,8 @@ import { getPostById } from "@/src/actions/posts/actions";
 //components
 import { NoPost } from "@/src/components/NoPost";
 import PostById from "@/src/components/PostById";
-import FormMessage from "@/src/components/FormMessage";
-import ListMessages from "@/src/components/ListMessages";
+import FormMessage from "@/src/components/FormCreateComment";
+import ListMessages from "@/src/components/ListComment";
 
 interface PostProps {
   params: {

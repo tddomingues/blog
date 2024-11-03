@@ -1,5 +1,5 @@
 import LikeProps from "./like";
-import MessageProps from "./message";
+import MessageProps from "./comment";
 import UserProps from "./user";
 
 export default interface PostProps {

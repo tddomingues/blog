@@ -318,7 +318,7 @@ export const editPost = async (
   }
 };
 
-export const createMessage = async ({
+export const createComment = async ({
   content,
   id_post,
   id_user,
@@ -355,7 +355,7 @@ export const createMessage = async ({
   }
 };
 
-export const editMessage = async ({
+export const editComment = async ({
   content,
   id_post,
   id_message,
@@ -411,7 +411,7 @@ export const deleteComment = async (id: string) => {
       return { error: "Usuário não encontrado" };
     }
 
-    const comment = await db.message.findFirst({
+    const comment = await db.comment.findFirst({
       where: {
         id,
       },
@@ -425,7 +425,7 @@ export const deleteComment = async (id: string) => {
       return { error: "Usuário não autorizado" };
     }
 
-    await db.message.delete({
+    await db.comment.delete({
       where: {
         id,
       },

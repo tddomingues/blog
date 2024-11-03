@@ -1,5 +1,5 @@
 //actions
-import { getPostById, getPosts } from "@/src/actions/posts/actions";
+import { getPostById } from "@/src/actions/posts/actions";
 import { currentUser } from "@/src/actions/user/getCurrentUser";
 
 //components

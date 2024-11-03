@@ -1,6 +1,6 @@
 import UserProps from "./user";
 
-export default interface MessageProps {
+export default interface CommentProps {
   id: string;
   content: string;
   create_at: Date;

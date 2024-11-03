@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 
 //actions
-import { createMessage } from "../actions/posts/actions";
+import { createComment } from "../actions/posts/actions";
 
 //hooks
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ interface FormMessageProps {
   id_post: string;
 }
 
-const FormMessage = ({ id_post, id_user }: FormMessageProps) => {
+const FormCreateComment = ({ id_post, id_user }: FormMessageProps) => {
   const {
     handleSubmit,
     register,
@@ -44,7 +44,7 @@ const FormMessage = ({ id_post, id_user }: FormMessageProps) => {
       id_user,
     };
 
-    await createMessage(newData);
+    await createComment(newData);
 
     reset();
   };
@@ -67,4 +67,4 @@ const FormMessage = ({ id_post, id_user }: FormMessageProps) => {
   );
 };
 
-export default FormMessage;
+export default FormCreateComment;
