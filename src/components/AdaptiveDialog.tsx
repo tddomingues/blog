@@ -1,8 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
-
-//actions
-import { deleteComment, deletePost } from "@/src/actions/posts/actions";
 
 //components
 import {
@@ -13,11 +9,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogDescription,
 } from "@/src/components/ui/alert-dialog";
 
 //icons
-import { Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface AdaptiveDialogProps {
@@ -40,9 +35,12 @@ const AdaptiveDialog = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel asChild>
+            <Button variant="secondary">Cancelar</Button>
+          </AlertDialogCancel>
           <AlertDialogAction asChild>{children}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

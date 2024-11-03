@@ -17,21 +17,55 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 
 import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
-import { deleteComment } from "../actions/posts/actions";
+import { deleteComment, editMessage } from "../actions/posts/actions";
 import AdaptiveDialog from "./AdaptiveDialog";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface ListMessagesProps {
   messages: MessageProps[];
+  id_post: string;
   user: Pick<UserProps, "id" | "image" | "email" | "role" | "name"> | null;
 }
 
-const ListMessages = ({ messages, user }: ListMessagesProps) => {
+const schema = z.object({
+  content: z.string().nonempty(),
+});
+
+type FormFields = z.infer<typeof schema>;
+
+const ListMessages = ({ messages, user, id_post }: ListMessagesProps) => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    defaultValues: {
+      content: "",
+    },
+    resolver: zodResolver(schema),
+  });
+
   const [idComment, setIdComment] = useState("");
 
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    const newData = {
+      ...data,
+      id_message: idComment,
+      id_post: id_post,
+    };
+
+    await editMessage(newData);
+
+    setIsEditOpen(false);
+  };
 
   const handleEditComment = (id: string) => {
     setIsEditOpen(true);
@@ -48,8 +82,14 @@ const ListMessages = ({ messages, user }: ListMessagesProps) => {
         isOpen={openDialog}
         setIsOpen={setOpenDialog}
         title="Excluir Comentário"
+        description="Excluir seu comentário permanentemente?"
       >
-        <Button onClick={() => handleDeleteComment(idComment)}>Excluir</Button>
+        <Button
+          onClick={() => handleDeleteComment(idComment)}
+          variant="destructive"
+        >
+          Excluir
+        </Button>
       </AdaptiveDialog>
 
       {messages.map((message) => (
@@ -123,8 +163,11 @@ const ListMessages = ({ messages, user }: ListMessagesProps) => {
             )}
           </div>
           {isEditOpen && idComment === message.id ? (
-            <form className="mt-1">
-              <Textarea />
+            <form className="mt-1" onSubmit={handleSubmit(onSubmit)}>
+              <Textarea
+                placeholder="Atualize seu comentário..."
+                {...register("content")}
+              />
               <div className="flex justify-end mt-2 gap-2">
                 <Button
                   type="button"
@@ -133,7 +176,7 @@ const ListMessages = ({ messages, user }: ListMessagesProps) => {
                 >
                   Cancelar
                 </Button>
-                <Button type="submit" variant="ghost">
+                <Button type="submit" variant="default">
                   Salvar
                 </Button>
               </div>

@@ -17,6 +17,12 @@ interface CreateMessageProps {
   content: string;
 }
 
+interface EditMessageProps {
+  id_message: string;
+  content: string;
+  id_post: string;
+}
+
 export async function likePost(data: LikePostProps) {
   try {
     if (!data) {
@@ -335,6 +341,54 @@ export const createMessage = async ({
           create: {
             content,
             fk_user_id: id_user,
+          },
+        },
+      },
+    });
+
+    revalidatePath(`/post/${id_post}`);
+  } catch (error: unknown) {
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      throw new Error(error.message);
+    }
+    throw error;
+  }
+};
+
+export const editMessage = async ({
+  content,
+  id_post,
+  id_message,
+}: EditMessageProps) => {
+  try {
+    const post = await db.post.findUnique({
+      where: {
+        id: id_post,
+      },
+      include: {
+        messages: {
+          where: {
+            id: id_message,
+          },
+        },
+      },
+    });
+
+    if (!post) return { error: "Postagem ou comentário não encontrada." };
+
+    await db.post.update({
+      where: {
+        id: id_post,
+      },
+      data: {
+        messages: {
+          update: {
+            where: {
+              id: id_message,
+            },
+            data: {
+              content,
+            },
           },
         },
       },

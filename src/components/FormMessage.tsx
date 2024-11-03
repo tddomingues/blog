@@ -59,7 +59,7 @@ const FormMessage = ({ id_post, id_user }: FormMessageProps) => {
             {...register("content")}
           />
         </div>
-        <Button className="mt-2 self-end via-fuchsia-200" variant="secondary">
+        <Button className="mt-2 self-end via-fuchsia-200" variant="default">
           Enviar Comentário
         </Button>
       </div>

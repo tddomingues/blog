@@ -32,7 +32,11 @@ const Post = async (props: PostProps) => {
                 <FormMessage id_post={params.id} id_user={user?.id} />
               </div>
             )}
-            <ListMessages messages={post.messages} user={user} />
+            <ListMessages
+              messages={post.messages}
+              user={user}
+              id_post={params.id}
+            />
           </div>
         </div>
       ) : (
