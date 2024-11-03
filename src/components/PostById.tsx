@@ -9,7 +9,7 @@ import { ptBR } from "date-fns/locale";
 //components
 import { Badge } from "@/src/components/ui/badge";
 import Like from "./Like";
-import BtnDelete from "./BtnDelete";
+import BtnDelete from "./AdaptiveDialog";
 
 //icons
 import { ArrowLeft, BookOpen, Calendar, Edit2 } from "lucide-react";

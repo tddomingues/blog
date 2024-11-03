@@ -1,9 +1,24 @@
+"use client";
+
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 
 import MessageProps from "../types/message";
-import BtnDelete from "./BtnDelete";
 import UserProps from "../types/user";
+import { Button } from "./ui/button";
+import { useState } from "react";
+import { Textarea } from "./ui/textarea";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/src/components/ui/dropdown-menu";
+
+import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
+import { deleteComment } from "../actions/posts/actions";
+import AdaptiveDialog from "./AdaptiveDialog";
 
 interface ListMessagesProps {
   messages: MessageProps[];
@@ -11,8 +26,32 @@ interface ListMessagesProps {
 }
 
 const ListMessages = ({ messages, user }: ListMessagesProps) => {
+  const [idComment, setIdComment] = useState("");
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleEditComment = (id: string) => {
+    setIsEditOpen(true);
+  };
+
+  const handleDeleteComment = (id: string) => {
+    deleteComment(id);
+    setOpenDialog(false);
+  };
+
   return (
     <>
+      <AdaptiveDialog
+        isOpen={openDialog}
+        setIsOpen={setOpenDialog}
+        title="Excluir Comentário"
+      >
+        <Button onClick={() => handleDeleteComment(idComment)}>Excluir</Button>
+      </AdaptiveDialog>
+
       {messages.map((message) => (
         <div className="mt-4" key={message.id}>
           <div className="flex items-center justify-between">
@@ -33,12 +72,77 @@ const ListMessages = ({ messages, user }: ListMessagesProps) => {
               </div>
             </div>
             {message.fk_user_id === user?.id && (
-              <BtnDelete id={message.id} type="comment" />
+              <div>
+                <DropdownMenu
+                  open={message.id === idComment && openDropdown}
+                  onOpenChange={() => {
+                    if (message.id === idComment && openDropdown) {
+                      setOpenDropdown(false);
+                      setIdComment("");
+                    } else {
+                      setOpenDropdown(true);
+                      setIdComment(message.id);
+                    }
+                  }}
+                >
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost">
+                      <EllipsisVertical />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <div>
+                      <DropdownMenuItem>
+                        <Button
+                          onClick={() => {
+                            handleEditComment(message.id);
+                            setOpenDropdown(false);
+                          }}
+                          variant="ghost"
+                        >
+                          <Pencil />
+                          <span className="ml-2">Editar</span>
+                        </Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            setOpenDropdown(false);
+                            setOpenDialog(true);
+                          }}
+                        >
+                          <Trash2 size={16} />
+                          <span className="ml-2">Excluir</span>
+                        </Button>
+                      </DropdownMenuItem>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             )}
           </div>
-          <div className="mt-1">
-            <p className="text-sm">{message.content}</p>
-          </div>
+          {isEditOpen && idComment === message.id ? (
+            <form className="mt-1">
+              <Textarea />
+              <div className="flex justify-end mt-2 gap-2">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsEditOpen(false)}
+                >
+                  Cancelar
+                </Button>
+                <Button type="submit" variant="ghost">
+                  Salvar
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <div className="mt-1">
+              <p className="text-sm">{message.content}</p>
+            </div>
+          )}
         </div>
       ))}
     </>
