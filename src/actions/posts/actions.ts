@@ -433,7 +433,7 @@ export const deleteComment = async (id: string) => {
 
     revalidatePath(`/post/${comment.fk_post_id}`);
 
-    return { message: "Post deletado com sucesso!" };
+    return { message: "Comentário deletado com sucesso!" };
   } catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       throw new Error(error.message);

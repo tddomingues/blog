@@ -17,11 +17,9 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 
 import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
-import { deleteComment, editComment } from "../actions/posts/actions";
-import AdaptiveDialog from "./AdaptiveDialog";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import AdaptiveDialog from "./AdaptiveDialogDelete";
+
+import FormEditComment from "./FormEditComment";
 
 interface ListCommentProps {
   messages: MessageProps[];
@@ -29,25 +27,7 @@ interface ListCommentProps {
   user: Pick<UserProps, "id" | "image" | "email" | "role" | "name"> | null;
 }
 
-const schema = z.object({
-  content: z.string().nonempty(),
-});
-
-type FormFields = z.infer<typeof schema>;
-
 const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm({
-    defaultValues: {
-      content: "",
-    },
-    resolver: zodResolver(schema),
-  });
-
   const [idComment, setIdComment] = useState("");
 
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -55,25 +35,8 @@ const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    const newData = {
-      ...data,
-      id_message: idComment,
-      id_post: id_post,
-    };
-
-    await editComment(newData);
-
-    setIsEditOpen(false);
-  };
-
   const handleEditComment = (id: string) => {
     setIsEditOpen(true);
-  };
-
-  const handleDeleteComment = (id: string) => {
-    deleteComment(id);
-    setOpenDialog(false);
   };
 
   return (
@@ -83,14 +46,9 @@ const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
         setIsOpen={setOpenDialog}
         title="Excluir Comentário"
         description="Excluir seu comentário permanentemente?"
-      >
-        <Button
-          onClick={() => handleDeleteComment(idComment)}
-          variant="destructive"
-        >
-          Excluir
-        </Button>
-      </AdaptiveDialog>
+        id={idComment}
+        type="comment"
+      />
 
       {messages.map((message) => (
         <div className="mt-4" key={message.id}>
@@ -163,24 +121,11 @@ const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
             )}
           </div>
           {isEditOpen && idComment === message.id ? (
-            <form className="mt-1" onSubmit={handleSubmit(onSubmit)}>
-              <Textarea
-                placeholder="Atualize seu comentário..."
-                {...register("content")}
-              />
-              <div className="flex justify-end mt-2 gap-2">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => setIsEditOpen(false)}
-                >
-                  Cancelar
-                </Button>
-                <Button type="submit" variant="default">
-                  Salvar
-                </Button>
-              </div>
-            </form>
+            <FormEditComment
+              idComment={idComment}
+              id_post={id_post}
+              setIsEditOpen={setIsEditOpen}
+            />
           ) : (
             <div className="mt-1">
               <p className="text-sm">{message.content}</p>

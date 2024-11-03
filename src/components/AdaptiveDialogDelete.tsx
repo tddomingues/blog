@@ -1,5 +1,3 @@
-"use client";
-
 //components
 import {
   AlertDialog,
@@ -15,21 +13,44 @@ import {
 //icons
 import { Button } from "./ui/button";
 
+import { deleteComment, deletePost } from "../actions/posts/actions";
+import { useToast } from "../hooks/use-toast";
+
 interface AdaptiveDialogProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen?: boolean;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   description?: string;
-  children: React.ReactNode;
+  id: string;
+  type: "comment" | "post";
 }
 
-const AdaptiveDialog = ({
-  children,
+const AdaptiveDialogDelete = ({
+  type,
+  id,
   isOpen,
   setIsOpen,
   title,
   description,
 }: AdaptiveDialogProps) => {
+  const handleDelete = async (id: string) => {
+    if (type === "comment") {
+      const res = await deleteComment(id);
+
+      if (res.error) {
+        new Error("Ocorreu um erro ao excluir o comentário");
+      }
+    }
+
+    if (type === "post") {
+      const res = await deletePost(id);
+
+      if (res.error) {
+        new Error("Ocorreu um erro ao excluir o post");
+      }
+    }
+  };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
@@ -41,11 +62,15 @@ const AdaptiveDialog = ({
           <AlertDialogCancel asChild>
             <Button variant="secondary">Cancelar</Button>
           </AlertDialogCancel>
-          <AlertDialogAction asChild>{children}</AlertDialogAction>
+          <AlertDialogAction asChild>
+            <Button onClick={() => handleDelete(id)} variant="destructive">
+              Excluir
+            </Button>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
 };
 
-export default AdaptiveDialog;
+export default AdaptiveDialogDelete;

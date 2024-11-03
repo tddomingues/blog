@@ -4,7 +4,6 @@ import { signIn } from "next-auth/react";
 import { z } from "zod";
 
 //components
-import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -31,7 +30,7 @@ type FormFields = z.infer<typeof schema>;
 
 const LoginForm = () => {
   const { toast } = useToast();
-  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -46,8 +45,6 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     const res = await login(data);
-
-    console.log(res);
 
     if (res?.error) {
       toast({

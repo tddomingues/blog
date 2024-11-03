@@ -9,10 +9,25 @@ import { ptBR } from "date-fns/locale";
 //components
 import { Badge } from "@/src/components/ui/badge";
 import Like from "./Like";
-import BtnDelete from "./AdaptiveDialog";
+import AdaptiveDialogDelete from "./AdaptiveDialogDelete";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/src/components/ui/dropdown-menu";
 
 //icons
-import { ArrowLeft, BookOpen, Calendar, Edit2 } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  Calendar,
+  Edit2,
+  EllipsisVertical,
+  Trash2,
+} from "lucide-react";
 
 //types
 import PostProps from "../types/post";
@@ -21,6 +36,9 @@ import UserProps from "../types/user";
 //libs
 import calculateReadingTime from "../utils/calculateReadingTime";
 import IconUser from "./IconUser";
+import { Button } from "./ui/button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface PostByIdProps {
   post: PostProps;
@@ -28,25 +46,69 @@ interface PostByIdProps {
 }
 
 const PostById = ({ post, user }: PostByIdProps) => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const router = useRouter();
+
   return (
     <div className="flex gap-4 flex-col mt-4">
+      <AdaptiveDialogDelete
+        id={post.id}
+        type="post"
+        title="Excluir Postagem"
+        isOpen={openDialog}
+        setIsOpen={setOpenDialog}
+      />
       <div className="flex justify-between">
         <Link href="/">
           <ArrowLeft className="hover:text-primary/80 duration-200" />
         </Link>
         {user?.role === "ADMIN" && (
-          <div className="flex gap-2 items-center">
-            <Link
-              href={`edit/${post.id}`}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <Edit2
-                size={16}
-                className="text-primary hover:text-primary/80 duration-200"
-              />
-            </Link>
-            {/* <BtnDelete id={post.id} type="post" /> */}
-          </div>
+          <DropdownMenu
+            open={openDropdown}
+            onOpenChange={() => {
+              if (openDropdown) {
+                setOpenDropdown(false);
+              } else {
+                setOpenDropdown(true);
+              }
+            }}
+          >
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost">
+                <EllipsisVertical />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setOpenDropdown(false);
+                    setOpenDialog(true);
+                  }}
+                >
+                  <Trash2 size={16} />
+                  <span className="ml-2">Excluir</span>
+                </Button>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button
+                  onClick={() => {
+                    router.push(`/post/edit/${post.id}`);
+                  }}
+                  variant="ghost"
+                >
+                  <Edit2
+                    size={16}
+                    className="text-primary hover:text-primary/80 duration-200"
+                  />
+                  <span className="ml-2">Editar</span>
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
       </div>
       <div className="w-full h-[300px] relative">
