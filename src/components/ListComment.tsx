@@ -98,8 +98,10 @@ const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
                           }}
                           variant="ghost"
                         >
-                          <Pencil />
-                          <span className="ml-2">Editar</span>
+                          <Pencil size={18} strokeWidth={1.5} />
+                          <span className="ml-2 text-sm font-normal">
+                            Editar
+                          </span>
                         </Button>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
@@ -110,8 +112,10 @@ const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
                             setOpenDialog(true);
                           }}
                         >
-                          <Trash2 size={16} />
-                          <span className="ml-2">Excluir</span>
+                          <Trash2 size={18} strokeWidth={1.5} />
+                          <span className="ml-2 text-sm font-normal">
+                            Excluir
+                          </span>
                         </Button>
                       </DropdownMenuItem>
                     </div>

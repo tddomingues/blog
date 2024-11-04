@@ -1,17 +1,13 @@
-import Link from "next/link";
-
 //actions
 import { currentUser } from "@/src/actions/user/getCurrentUser";
+import { getPosts } from "@/src/actions/posts/actions";
 
 //components
 import ListAllPosts from "@/src/components/ListAllPosts";
-import { getPosts } from "@/src/actions/posts/actions";
 import NewestPost from "@/src/components/NewestPost";
 import { NoPost } from "@/src/components/NoPost";
 import ListMostLikedPosts from "@/src/components/ListMostLikedPosts";
-
-//icons
-import { SquarePen } from "lucide-react";
+import BtnCreatePost from "@/src/components/BtnCreatePost";
 
 export const Page = async () => {
   const user = await currentUser();
@@ -21,15 +17,7 @@ export const Page = async () => {
   return (
     <>
       <div className="flex justify-end my-4 container">
-        {user?.role === "ADMIN" && (
-          <Link
-            href={"/post/create"}
-            className="flex items-center gap-2 transition-colors duration-200 text-primary hover:text-primary/80"
-          >
-            <SquarePen size={18} strokeWidth={1.5} />
-            <span className="text-sm">Escrever</span>
-          </Link>
-        )}
+        {user?.role === "ADMIN" && <BtnCreatePost />}
       </div>
       {posts.length > 0 ? (
         <div className="flex flex-col gap-6 container">
