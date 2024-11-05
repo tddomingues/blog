@@ -66,6 +66,7 @@ const RegisterForm = () => {
 
     setTextSendEmail(res.message);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid gap-4 py-4">

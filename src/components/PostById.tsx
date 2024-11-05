@@ -14,8 +14,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
 
@@ -57,6 +55,7 @@ const PostById = ({ post, user }: PostByIdProps) => {
         id={post.id}
         type="post"
         title="Excluir Postagem"
+        description="Excluir sua postagem permanentemente?"
         isOpen={openDialog}
         setIsOpen={setOpenDialog}
       />
@@ -83,18 +82,6 @@ const PostById = ({ post, user }: PostByIdProps) => {
             <DropdownMenuContent>
               <DropdownMenuItem>
                 <Button
-                  variant="ghost"
-                  onClick={() => {
-                    setOpenDropdown(false);
-                    setOpenDialog(true);
-                  }}
-                >
-                  <Trash2 size={18} strokeWidth={1.5} />
-                  <span className="ml-2 text-sm font-normal">Excluir</span>
-                </Button>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Button
                   onClick={() => {
                     router.push(`/post/edit/${post.id}`);
                   }}
@@ -106,6 +93,18 @@ const PostById = ({ post, user }: PostByIdProps) => {
                     className="text-primary hover:text-primary/80 duration-200"
                   />
                   <span className="ml-2 text-sm font-normal">Editar</span>
+                </Button>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setOpenDropdown(false);
+                    setOpenDialog(true);
+                  }}
+                >
+                  <Trash2 size={18} strokeWidth={1.5} />
+                  <span className="ml-2 text-sm font-normal">Excluir</span>
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>

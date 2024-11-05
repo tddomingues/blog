@@ -7,7 +7,6 @@ import MessageProps from "../types/comment";
 import UserProps from "../types/user";
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { Textarea } from "./ui/textarea";
 
 import {
   DropdownMenu,
@@ -129,6 +128,8 @@ const ListComment = ({ messages, user, id_post }: ListCommentProps) => {
               idComment={idComment}
               id_post={id_post}
               setIsEditOpen={setIsEditOpen}
+              isEditOpen={isEditOpen}
+              content={message.content}
             />
           ) : (
             <div className="mt-1">

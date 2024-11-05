@@ -13,23 +13,25 @@ type FormFields = z.infer<typeof schema>;
 
 interface FormEditCommentProps {
   setIsEditOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditOpen?: boolean;
   idComment: string;
   id_post: string;
+  content: string;
 }
 
 const FormEditComment = ({
   setIsEditOpen,
   idComment,
   id_post,
+  content,
 }: FormEditCommentProps) => {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm({
     defaultValues: {
-      content: "",
+      content: content,
     },
     resolver: zodResolver(schema),
   });
@@ -47,11 +49,8 @@ const FormEditComment = ({
   };
 
   return (
-    <form className="mt-1" onSubmit={handleSubmit(onSubmit)}>
-      <Textarea
-        placeholder="Atualize seu comentário..."
-        {...register("content")}
-      />
+    <form className="mt-2" onSubmit={handleSubmit(onSubmit)}>
+      <Textarea {...register("content")} />
       <div className="flex justify-end mt-2 gap-2">
         <Button
           type="button"

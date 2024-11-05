@@ -20,7 +20,7 @@ export default auth(async (req) => {
     return NextResponse.redirect(new URL("/", nextUrl));
   }
 
-  if (isLoggedIn && isProtectedRoute && role !== "ADMIN") {
+  if (isProtectedRoute && role !== "ADMIN") {
     return NextResponse.redirect(new URL("/", nextUrl));
   }
 });

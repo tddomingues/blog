@@ -14,7 +14,6 @@ import {
 import { Button } from "./ui/button";
 
 import { deleteComment, deletePost } from "../actions/posts/actions";
-import { useToast } from "../hooks/use-toast";
 
 interface AdaptiveDialogProps {
   isOpen?: boolean;
